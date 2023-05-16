@@ -107,12 +107,13 @@ class Login(Resource):
         pass_db = logindata[0][6]
         if pass_db == password:
             print("login success!")
-            #make data to return call success
+            response = jsonify({"result":"success"})
         else:
             print("login failed: password incorrect")
+            response = jsonify({"result":"failure"})
             #make data to return call failure 
 
-        #return call 
+        return response
 
 api.add_resource(Page, '/page') 
 api.add_resource(Login, "/login")
