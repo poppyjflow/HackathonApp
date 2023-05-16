@@ -5,6 +5,7 @@ function registerHandlers() {
     .getElementById("StatusButton")
     .addEventListener("click", changeStatus);
   document.getElementById("NewACTButton").addEventListener("click", newACT);*/
+  document.getElementById("exerciseContainer").addEventListener("click", viewEx);
 }
 
 function logout() {
@@ -23,11 +24,8 @@ function changeStatus() {
   }
 }
 
-function newEx() {
-  const user = getCookie("username");
-  if (canUserAccess(user)) {
-    window.location.href = "http://127.0.0.1:3000/exercise.html";
-  }
+function viewEx() {
+  window.location.href = "http://127.0.0.1:3000/viewEx.html";
 }
 
 function newACT() {
