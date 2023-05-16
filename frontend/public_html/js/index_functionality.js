@@ -12,7 +12,7 @@ function login() {
     password: password,
   };
 
-  fetch("http://127.0.0.1:3000/login/", {
+  fetch("http://127.0.0.1:5000/login", {
     method: "POST",
     mode: "cors",
     headers: {
