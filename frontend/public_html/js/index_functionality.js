@@ -11,10 +11,13 @@ function login() {
     username: username,
     password: password,
   };
-  
-  fetch("http://localhost:5000/login/", {
+
+  fetch("http://127.0.0.1:3000/login/", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify(data),
   })
     .then((res) => {
@@ -25,8 +28,8 @@ function login() {
     .catch((error) => {
       alert(error.message);
     });
-  window.location.href = "http://localhost:5000/home.html";
-  document.cookie = "username=" + username;
+  //window.location.href = "http://localhost:5000/home.html";
+  //document.cookie = "username=" + username;
 }
 
 document.addEventListener("DOMContentLoaded", registerHandlers);

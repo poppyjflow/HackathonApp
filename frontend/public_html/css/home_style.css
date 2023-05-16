@@ -46,6 +46,14 @@ h1 {
   text-align: center;
 }
 
+#aircraftImg {
+  border: 2px solid darkOrange;
+}
+
+#reportImg {
+  border: 2px solid black;
+}
+
 #reportHeader {
   left: 10%;
 }
