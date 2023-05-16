@@ -110,5 +110,3 @@ api.add_resource(Exercises, "/exercises")
 if __name__ == '__main__':
     connect_info = Connection(apikeys)
     app.run()
-
-
