@@ -16,10 +16,9 @@ function login() {
     method: "POST",
     mode: "cors",
     headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "text/plain",
     },
-    body: data,
+    body: JSON.stringify(data),
   })
     .then((res) => {
       res.text().then((text) => {
@@ -29,7 +28,7 @@ function login() {
     .catch((error) => {
       alert(error.message);
     });
-  window.location.href = "http://localhost:3000/home.html";
+  //window.location.href = "http://localhost:3000/home.html";
   //document.cookie = "username=" + username;
 }
 
