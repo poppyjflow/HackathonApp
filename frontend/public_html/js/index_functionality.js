@@ -12,23 +12,24 @@ function login() {
     password: password,
   };
 
-  fetch("http://127.0.0.1:3000/login/", {
+  fetch("http://127.0.0.1:5000/login", {
     method: "POST",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
     },
-    body: JSON.stringify(data),
+    body: data,
   })
     .then((res) => {
-      res.json().then((text) => {
+      res.text().then((text) => {
         console.log("Returned text: " + text);
       });
     })
     .catch((error) => {
       alert(error.message);
     });
-  //window.location.href = "http://localhost:5000/home.html";
+  window.location.href = "http://localhost:3000/home.html";
   //document.cookie = "username=" + username;
 }
 
