@@ -3,16 +3,18 @@
   <head>
     <title>Winning team</title>
     <link rel="stylesheet" href="./css/index_style.css" />
-    <link rel="script" href="./js/index_functionality.js" />
+    <script src="./js/index_functionality.js"></script>
   </head>
   <body>
     <div id="header">
-      <button class="headerButton" id="homeButton">Home</button>
+      <a href="http://localhost:5000/home.html">
+        <img id="logoImg" src="./images/home_logo.png" />
+      </a>
       <button class="headerButton" id="LogoutButton">Log Out</button>
     </div>
     <div id="content">
       <h1>Login</h1>
-      <form action="/" method="POST" id="retUserForm">
+      <form>
         <label for="username">Username</label>
         <input type="text" name="username" id="UserText" />
         <br />

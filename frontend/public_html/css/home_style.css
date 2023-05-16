@@ -17,28 +17,19 @@ body {
   background-color: #42858c;
 }
 
-h1 {
-  font-size: 45px;
-}
-
-form,
-input {
-  font-size: 28px;
-  margin: 20px;
-}
-
-#LoginButton {
-  width: 120px;
-  height: 50px;
-  font-size: 26px;
-  font-weight: bold;
-  color: #35393c;
-  margin-left: 40%;
+.clickableImg {
+  height: 300px;
+  width: 600px;
+  margin-bottom: 40px;
 }
 
 #homeButton {
   left: 20px;
   background: url("../images/home_logo.png");
+}
+
+a {
+  display: block;
 }
 
 #logoImg {
@@ -74,4 +65,5 @@ input {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow-y: auto;
 }
