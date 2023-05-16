@@ -45,6 +45,20 @@ class AircraftRef(Resource):
 
         args = parser.parse_args()
 
+        query = "select * from aircraft_annual_reference"
+        watoken = ' where ' #where or and, used to chain params
+        if 'airframe' in args.keys:
+            query += watoken + 'airframe = '+ args['airframe'] 
+            watoken = ' and '
+        if 'year' in args.keys:
+            query += watoken + 'year = ' + args['year']
+            watoken = ' and '
+        if 'num' in args.keys:
+            query += watoken + 'num = ' + args['num']
+            watoken = ' and '
+
+
+        query += ';'
 
     #only PACAF sessions
     def post(self):
@@ -86,7 +100,8 @@ class Login(Resource):
 
         print(msg)
         msg.headers['Access-Control-Allow-Origin']='*'
-
+        msg.headers['Access-Control-Request-Method']='POST, GET'
+        msg.headers['Access-Control-Request-Headers']="Content-Type"
         return msg
 
 api.add_resource(Login, "/")
