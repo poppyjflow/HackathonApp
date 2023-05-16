@@ -3,11 +3,10 @@ function registerHandlers() {
 }
 
 function login() {
-  console.log("Login button pressed");
   var username = document.getElementById("UserText");
-  console.log("Username: " + username);
   var password = document.getElementById("PasswordText");
-  if (username.innerText === "" || password.innerText === "") {
+  console.log(username.value + ", " + password.value);
+  if (username.value === "" || password.value === "") {
     alert("Please enter a valid username or password");
     return;
   }
