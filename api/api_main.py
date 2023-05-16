@@ -2,7 +2,7 @@
 #loosely following this guide
 # https://towardsdatascience.com/the-right-way-to-build-an-api-with-python-cd08ab285f8f
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
 from flask_restful import Resource, Api, reqparse
 import pandas as pandas
 import ast
@@ -34,56 +34,26 @@ class Connection:
             port=self.port
         )
 
-        #test code to make sure im connected
-        #query = 'select * from users;'
-        #cursor = self.conn_handle.cursor()
-        #cursor.execute(query)
-        #user_records = cursor.fetchall()
-        #for row in user_records:
-        #    print(row)
+class AircraftRef(Resource):
 
-        
-        
-
-
-class Page(Resource):
-    
-
-    #Get info from database
     def get(self):
 
-
         parser = reqparse.RequestParser()
+        parser.add_argument('airframe', required = False)
+        parser.add_argument('year', required=False)
+        parser.add_argument('num', required=False)
+
         args = parser.parse_args()
 
-    
-    #Edit database
-    #admin only
+
+    #only PACAF sessions
     def post(self):
 
-        parser = reqparse.RequestParser() 
-
-        #add arguments
-        args = parser.parse_args()
-
-        #format data from args
-
-        #check modify permissions
-
-        #read the data
-
-        #add new values
-
-        #save to database
-
         pass
 
+class Exercises(Resource):
 
-    #Add new database entries
-    #admin only
-    def put(self):
-        pass
-
+    pass
 
 class Login(Resource):
 
@@ -105,19 +75,23 @@ class Login(Resource):
         logindata = cursor.fetchall() # returns list of tuples
         
         pass_db = logindata[0][6]
+        permissions = logindata[0][7]
         if pass_db == password:
             print("login success!")
-            response = jsonify({"result":"success"})
+            msg = jsonify({"result":"success", "access":permissions})
         else:
             print("login failed: password incorrect")
-            response = jsonify({"result":"failure"})
+            msg = jsonify({"result":"failure"})
             #make data to return call failure 
 
-        return response
+        print(msg)
+        msg.headers['Access-Control-Allow-Origin']='*'
 
-api.add_resource(Page, '/page') 
-api.add_resource(Login, "/login")
+        return msg
 
+api.add_resource(Login, "/")
+api.add_resource(AircraftRef, "/aircraft_reference")
+api.add_resource(Exercises, "/exercises")
 if __name__ == '__main__':
     connect_info = Connection(apikeys)
     app.run()
