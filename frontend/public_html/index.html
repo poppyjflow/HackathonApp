@@ -2,8 +2,26 @@
 <html>
   <head>
     <title>Winning team</title>
+    <link rel="stylesheet" href="./css/index_style.css" />
+    <script src="./js/index_functionality.js"></script>
   </head>
   <body>
-    It's working!
+    <div id="header">
+      <img id="logoImg" src="./images/home_logo.png" />
+    </div>
+    <div id="content">
+      <h1>Login</h1>
+      <form>
+        <label for="username">Username</label>
+        <input type="text" name="username" id="UserText" />
+        <br />
+        <label for="password">Password</label>
+        <input type="password" name="password" id="PasswordText" />
+        <br />
+        <input type="button" name="login" id="LoginButton" value="Log In" />
+
+        <div id="invalidMsg"></div>
+      </form>
+    </div>
   </body>
 </html>
