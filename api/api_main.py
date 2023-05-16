@@ -2,8 +2,9 @@
 #loosely following this guide
 # https://towardsdatascience.com/the-right-way-to-build-an-api-with-python-cd08ab285f8f
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
 from flask_restful import Resource, Api, reqparse
+from flask_cors import CORS, cross_origin
 import pandas as pandas
 import ast
 import psycopg2
@@ -11,6 +12,7 @@ import psycopg2
 apikeys = None
 
 app = Flask(__name__)
+cors = CORS(app)
 api = Api(app)
 
 
@@ -34,57 +36,54 @@ class Connection:
             port=self.port
         )
 
-        #test code to make sure im connected
-        #query = 'select * from users;'
-        #cursor = self.conn_handle.cursor()
-        #cursor.execute(query)
-        #user_records = cursor.fetchall()
-        #for row in user_records:
-        #    print(row)
+class AircraftRef(Resource):
 
-        
-        
-
-
-class Page(Resource):
-    
-
-    #Get info from database
+    #get data from aircraft reference table
+    #required args: 
+    #   none
+    #optional args:
+    #   airframe
+    #   year
+    #   num
     def get(self):
 
-
         parser = reqparse.RequestParser()
-        args = parser.parse_args()
+        parser.add_argument('airframe', required = False)
+        parser.add_argument('year', required=False)
+        parser.add_argument('num', required=False)
 
-    
-    #Edit database
-    #admin only
+        args = parser.parse_args()
+        print(args)
+
+        query = "select * from aircraft_annual_reference"
+        watoken = ' where ' #where or and, used to chain params
+        if args['airframe'] != None:
+            query += watoken + 'airframe = '+ args['airframe'] 
+            watoken = ' and '
+        if args['year'] != None:
+            query += watoken + 'year = ' + args['year']
+            watoken = ' and '
+        if args['num'] != None:
+            query += watoken + 'num = ' + args['num']
+            watoken = ' and '
+
+
+        query += ';'
+        print(query)
+
+    #only PACAF sessions
     def post(self):
 
-        parser = reqparse.RequestParser() 
-
-        #add arguments
-        args = parser.parse_args()
-
-        #format data from args
-
-        #check modify permissions
-
-        #read the data
-
-        #add new values
-
-        #save to database
-
         pass
 
+class Exercises(Resource):
 
-    #Add new database entries
-    #admin only
-    def put(self):
-        pass
+    pass
 
-
+#Login to site
+#Required args:
+#   username (email)
+#   password (hashed password)
 class Login(Resource):
 
     #Attempt to login
@@ -103,21 +102,33 @@ class Login(Resource):
         query = 'select * from users where email_addy = \''+username +'\';'
         cursor.execute(query)
         logindata = cursor.fetchall() # returns list of tuples
-        
+
+        if(len(logindata)) == 0: #bad username/password
+            msg = jsonify({"response":"failure"})
+            msg.headers['Access-Control-Allow-Origin']='*'
+            msg.headers['Access-Control-Request-Method']='POST, GET'
+            msg.headers['Access-Control-Request-Headers']="Content-Type"
+            return msg
+
         pass_db = logindata[0][6]
+        permissions = logindata[0][7]
         if pass_db == password:
             print("login success!")
-            response = jsonify({"result":"success"})
+            msg = jsonify({"result":"success", "access":permissions})
         else:
             print("login failed: password incorrect")
-            response = jsonify({"result":"failure"})
+            msg = jsonify({"result":"failure"})
             #make data to return call failure 
 
-        return response
+        print(msg)
+        msg.headers['Access-Control-Allow-Origin']='*'
+        msg.headers['Access-Control-Request-Method']='POST, GET'
+        msg.headers['Access-Control-Request-Headers']="Content-Type"
+        return msg
 
-api.add_resource(Page, '/page') 
-api.add_resource(Login, "/login")
-
+api.add_resource(Login, "/")
+api.add_resource(AircraftRef, "/aircraft_reference")
+api.add_resource(Exercises, "/exercises")
 if __name__ == '__main__':
     connect_info = Connection(apikeys)
     app.run()
