@@ -2,7 +2,7 @@
 #loosely following this guide
 # https://towardsdatascience.com/the-right-way-to-build-an-api-with-python-cd08ab285f8f
 
-from flask import Flask
+from flask import Flask, jsonify
 from flask_restful import Resource, Api, reqparse
 import pandas as pandas
 import ast
@@ -107,12 +107,13 @@ class Login(Resource):
         pass_db = logindata[0][6]
         if pass_db == password:
             print("login success!")
-            #make data to return call success
+            response = jsonify({"result":"success"})
         else:
             print("login failed: password incorrect")
+            response = jsonify({"result":"failure"})
             #make data to return call failure 
 
-        #return call 
+        return response
 
 api.add_resource(Page, '/page') 
 api.add_resource(Login, "/login")
