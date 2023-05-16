@@ -4,6 +4,7 @@
 
 from flask import Flask, jsonify, make_response
 from flask_restful import Resource, Api, reqparse
+from flask_cors import CORS, cross_origin
 import pandas as pandas
 import ast
 import psycopg2
@@ -11,6 +12,7 @@ import psycopg2
 apikeys = None
 
 app = Flask(__name__)
+cors = CORS(app)
 api = Api(app)
 
 
@@ -36,6 +38,13 @@ class Connection:
 
 class AircraftRef(Resource):
 
+    #get data from aircraft reference table
+    #required args: 
+    #   none
+    #optional args:
+    #   airframe
+    #   year
+    #   num
     def get(self):
 
         parser = reqparse.RequestParser()
@@ -44,21 +53,23 @@ class AircraftRef(Resource):
         parser.add_argument('num', required=False)
 
         args = parser.parse_args()
+        print(args)
 
         query = "select * from aircraft_annual_reference"
         watoken = ' where ' #where or and, used to chain params
-        if 'airframe' in args.keys:
+        if args['airframe'] != None:
             query += watoken + 'airframe = '+ args['airframe'] 
             watoken = ' and '
-        if 'year' in args.keys:
+        if args['year'] != None:
             query += watoken + 'year = ' + args['year']
             watoken = ' and '
-        if 'num' in args.keys:
+        if args['num'] != None:
             query += watoken + 'num = ' + args['num']
             watoken = ' and '
 
 
         query += ';'
+        print(query)
 
     #only PACAF sessions
     def post(self):
@@ -69,6 +80,10 @@ class Exercises(Resource):
 
     pass
 
+#Login to site
+#Required args:
+#   username (email)
+#   password (hashed password)
 class Login(Resource):
 
     #Attempt to login
