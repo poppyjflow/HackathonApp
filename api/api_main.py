@@ -102,7 +102,14 @@ class Login(Resource):
         query = 'select * from users where email_addy = \''+username +'\';'
         cursor.execute(query)
         logindata = cursor.fetchall() # returns list of tuples
-        
+
+        if(len(logindata)) == 0: #bad username/password
+            msg = jsonify({"response":"failure"})
+            msg.headers['Access-Control-Allow-Origin']='*'
+            msg.headers['Access-Control-Request-Method']='POST, GET'
+            msg.headers['Access-Control-Request-Headers']="Content-Type"
+            return msg
+
         pass_db = logindata[0][6]
         permissions = logindata[0][7]
         if pass_db == password:
