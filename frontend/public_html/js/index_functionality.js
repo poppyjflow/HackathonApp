@@ -18,7 +18,7 @@ function login() {
     headers: {
       "Content-Type": "text/plain",
     },
-    body: JSON.stringify(data),
+    body: data,
   })
     .then((res) => {
       res.text().then((text) => {
