@@ -1,9 +1,7 @@
 function registerHandlers() {
   document.getElementById("LogoutButton").addEventListener("click", logout);
   document.getElementById("NewExerciseButton").addEventListener("click", newEx);
-  document
-    .getElementById("StatusButton")
-    .addEventListener("click", changeStatus);
+  document.getElementById("StatusButton").addEventListener("click", changeStatus);
   document.getElementById("NewACTButton").addEventListener("click", newACT);
 }
 
