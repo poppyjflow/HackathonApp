@@ -28,17 +28,24 @@ input {
 }
 
 #LoginButton {
-  width: 120px;
-  height: 50px;
-  font-size: 26px;
+  width: 130px;
+  height: 60px;
+  font-size: 24px;
   font-weight: bold;
-  color: #35393c;
+  color: #397367;
+  border: 2px solid black;
   margin-left: 40%;
+  background-color: white;
+  border-radius: 5px;
 }
 
 #homeButton {
   left: 20px;
   background: url("../images/home_logo.png");
+}
+
+#homeButton:hover {
+  cursor: default;
 }
 
 #logoImg {
@@ -61,6 +68,10 @@ input {
   font-family: "Courier New", Courier, monospace;
   font-weight: bold;
   right: 20px;
+}
+
+#LogoutButton:hover {
+  cursor: pointer;
 }
 
 #content {
