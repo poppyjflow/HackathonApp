@@ -30,17 +30,12 @@ function registerHandlers() {
   document.getElementById("addRow").addEventListener("click", rowAdd);
   document.getElementById("saveButton"), addEventListener("click", retriveData);
   document.getElementById("LogoutButton").addEventListener("click", logout);
-  /*document
-    .getElementById("createTableButton")
-    .addEventListener("click", createTable);*/
+  document.getElementById("createTableButton").addEventListener("click", createTable);
   //document.getElementById("newExButton").addEventListener("click", newEx);
   //document.getElementById("backButton").addEventListener("click", goBack);
 }
 
-function newEx() {
-  console.log("all is good");
-  window.location.href = "http://localhost:3000/newEx.html";
-}
+
 function goBack() {
   console.log("all is good");
   window.location.href = "http://localhost:3000/home.html";
@@ -50,6 +45,12 @@ function logout() {
   console.log("Logging user out...");
   document.cookie = "";
   window.location.href = "http://127.0.0.1:3000/index.html";
+}
+
+function createTable(){
+  console.log("Should create table");
+  gridOptions.api.setRowData([{}, {}]);
+  gridOptions.api.setColumnDefs(columnDefs);
 }
 
 function retriveData() {
@@ -64,9 +65,8 @@ function rowAdd() {
 }
 
 const columnDefs = [
-  { field: "Aircraft Type", editable: true },
-  { field: "Aircraft Number", editable: true },
-  { field: "# of personnel needed", editable: true },
+  { field: "Exercise Name", editable: true },
+  { field: "TDY Location", editable: true }
 ];
 
 // specify the data

@@ -17,6 +17,13 @@ function retriveData() {
 
 function createTable() {
   console.log("Should create table");
+  gridOptions.api.setRowData(rowData);
+  gridOptions.api.setColumnDefs([
+    { field: "airframe", editable: true },
+    { field: "1acft", editable: true },
+    { field: "2acft", editable: true },
+  ]);
+  numCol = 2;
 }
 
 function logout() {
@@ -42,15 +49,15 @@ function rowAdd() {
 function colAdd(){
   const newColDef = columnDefs;
   numCol+=1;
-  let fieldData = numCol.toString()+"(# of personnel needed)";
+  let fieldData = numCol.toString()+"acft";
   newColDef.push( {field: fieldData, editable: true });
   gridOptions.api.setColumnDefs(newColDef);
 }
 
 const columnDefs = [
-  { field: "Aircraft name", editable: true },
-  { field: "1(# of personnel needed)", editable: true },
-  { field: "2(# of personnel needed)", editable: true },
+  { field: "airframe", editable: true },
+  { field: "1acft", editable: true },
+  { field: "2acft", editable: true },
 ];
 
 // specify the data
