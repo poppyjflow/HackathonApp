@@ -1,3 +1,4 @@
+var numCol = 2;
 function registerHandlers() {
   document.getElementById("addRow").addEventListener("click", rowAdd);
   document.getElementById("saveButton"), addEventListener("click", retriveData);
@@ -5,6 +6,7 @@ function registerHandlers() {
   document
     .getElementById("createTableButton")
     .addEventListener("click", createTable);
+  document.getElementById("addCol").addEventListener("click",colAdd);
 }
 
 function retriveData() {
@@ -37,10 +39,18 @@ function rowAdd() {
   gridOptions.api.applyTransaction({ add: [{}] });
 }
 
+function colAdd(){
+  const newColDef = columnDefs;
+  numCol+=1;
+  let fieldData = numCol.toString()+"(# of personnel needed)";
+  newColDef.push( {field: fieldData, editable: true });
+  gridOptions.api.setColumnDefs(newColDef);
+}
+
 const columnDefs = [
-  { field: "Aircraft Type", editable: true },
-  { field: "Aircraft Number", editable: true },
-  { field: "# of personnel needed", editable: true },
+  { field: "Aircraft name", editable: true },
+  { field: "1(# of personnel needed)", editable: true },
+  { field: "2(# of personnel needed)", editable: true },
 ];
 
 // specify the data
