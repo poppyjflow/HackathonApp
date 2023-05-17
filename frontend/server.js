@@ -6,8 +6,9 @@ const app = express();
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
-app.post("/hashpassword", (req, res) => {
-  const password = req.body.password;
+app.get("/hashpassword/:password", (req, res) => {
+  const password = req.params.password;
+  console.log("Retrieved password", password);
   bcrypt
     .genSalt(saltRounds)
     .then((salt) => {
@@ -15,11 +16,12 @@ app.post("/hashpassword", (req, res) => {
     })
     .then((hash) => {
       console.log("Hash: ", hash);
-      res.send(bcrypt.hash(password, hash));
+
+      res.send(JSON.stringify(bcrypt.hash(password, hash)));
     })
     .catch((err) => {
       console.error(err.message);
-      res.send(err.message);
+      res.send(JSON.stringify(err.message));
     });
 });
 
