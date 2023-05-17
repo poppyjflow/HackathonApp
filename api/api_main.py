@@ -173,9 +173,18 @@ class Login(Resource):
 
         pass_db = logindata[0][6]
         permissions = logindata[0][7]
+        username = logindata[0][5]
+        rank = logindata[0][2]
+        org = logindata[0][1]
+
         if pass_db == password:
             print("login success!")
-            msg = jsonify({"result":"success", "access":permissions})
+            msg = jsonify({"result":"success", 
+            "access":permissions,
+            "username":username,
+            "rank":rank,
+            "org":org
+            })
         else:
             print("login failed: password incorrect")
             msg = jsonify({"result":"failure"})
