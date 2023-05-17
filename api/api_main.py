@@ -52,8 +52,8 @@ class AircraftRef(Resource):
 
         parser = reqparse.RequestParser()
         parser.add_argument('airframe', required = False)
-        parser.add_argument('year', required=False)
-        parser.add_argument('num', required=False)
+        #parser.add_argument('year', required=False)
+        #parser.add_argument('num', required=False)
 
         n_acft_offset = 2 #row containing price is 2 + (n_aircraft)
         args = parser.parse_args()
@@ -62,11 +62,11 @@ class AircraftRef(Resource):
         query = "select * from aircraft_annual_reference"
         watoken = ' where ' #where or and, used to chain params
         if args['airframe'] != None:
-            query += watoken + 'airframe = '+ args['airframe'] 
+            query += watoken + 'airframe = \''+ args['airframe'] +'\''
             watoken = ' and '
-        if args['fiscal_year'] != None:
-            query += watoken + 'year = ' + args['year']
-            watoken = ' and '
+        #if args['fiscal_year'] != None:
+        #    query += watoken + 'year = ' + args['year']
+        #    watoken = ' and '
         #pretty sure this isn't needed
         #if args['num'] != None:
         #    query += watoken + 'num = ' + args['num'] + 'acft'
@@ -80,8 +80,7 @@ class AircraftRef(Resource):
         cursor.execute(query)
         data = cursor.fetchall()
         #filter data for a specific number of aircraft
-        if args['num'] != None:
-            pass
+
 
 
         #No data found
@@ -89,14 +88,23 @@ class AircraftRef(Resource):
             msg = jsonify({"rows":"0"})
             return msg
 
-
+        #format response data
         msg_dict = {}
         nrow = 0
-        for row in data:
-            msg_dict[str(nrow)] = str(row)
+        for row in data: #each row corresponds to an airframe
+            rd = {}
+            #airframe
+            rd['airframe'] = row[2]
+            #year
+            rd['year'] = row[1]
+            #cost for each number of aircraft
+            for num_workers in range(3,len(row)):
+                rd[str(num_workers)+'acft'] = row[num_workers]
+            msg_dict[str(nrow)] = rd
             nrow += 1
         msg_dict['rows'] = str(nrow)
-        print(msg_dict)
+
+        return jsonify(msg_dict)
         
     #Edit the aircraft reference
     #only PACAF sessions
