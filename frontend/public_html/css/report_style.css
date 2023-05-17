@@ -35,6 +35,53 @@ h3 {
   color: #35393c;
 }
 
+#formContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 40%;
+  min-width: 450px;
+  max-width: 700px;
+  border: 2px solid black;
+  padding: 0% 10% 5% 10%;
+  border-radius: 10px;
+  box-shadow: #42858c 2px 2px 7px 7px;
+  background-color: white;
+}
+
+input {
+  border: 1px solid darkgray;
+  border-radius: 5px;
+}
+
+input:hover {
+  border: 2px solid #42858c;
+  border-radius: 5px;
+}
+
+form {
+  width: 100%;
+  font-size: 26px;
+  font-family: "Courier New", Courier, monospace;
+}
+
+input {
+  font-size: 20px;
+}
+
+h1 {
+  font-size: 45px;
+  color: #42858c;
+}
+
+.inputRow {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
 #header {
   position: absolute;
   top: 0;

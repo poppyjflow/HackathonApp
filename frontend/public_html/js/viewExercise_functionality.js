@@ -1,3 +1,31 @@
+var currentGrid;
+
+function main() {
+  const gridDiv = document.querySelector("#myGrid");
+  new agGrid.Grid(gridDiv, gridOptions);
+  registerHandlers();
+  initializeGrid();
+}
+
+function initializeGrid() {
+  console.log("Initializing Grid");
+  fetch("http://127.0.0.1:5000/aicraft_reference", {
+    method: "GET",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => {
+      res.json().then((text) => {
+        console.log(text);
+      });
+    })
+    .catch((error) => {
+      alert(error.message);
+    });
+}
+
 function registerHandlers() {
   document.getElementById("addRow").addEventListener("click", rowAdd);
   document.getElementById("saveButton"), addEventListener("click", retriveData);
@@ -45,9 +73,5 @@ const gridOptions = {
   columnDefs: columnDefs,
   rowData: rowData,
 };
-document.addEventListener("DOMContentLoaded", () => {
-  const gridDiv = document.querySelector("#myGrid");
-  new agGrid.Grid(gridDiv, gridOptions);
-});
 
-document.addEventListener("DOMContentLoaded", registerHandlers);
+document.addEventListener("DOMContentLoaded", main);
