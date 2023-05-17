@@ -66,12 +66,12 @@ function login() {
     .then((res) => {
       res.json().then((text) => {
         console.log(text);
-        if (text.response === "success") {
+        //if (text.response === "success") {
           document.cookie += "username=" + text.username + ";";
           document.cookie += "access=" + text.access + ";";
           window.location.href = "http://localhost:3000/home.html";
           return;
-        }
+        //}
         alert("Invalid username/password combination");
       });
     })

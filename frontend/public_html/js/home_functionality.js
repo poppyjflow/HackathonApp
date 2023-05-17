@@ -7,11 +7,6 @@ document.addEventListener("DOMContentLoaded", registerHandlers);
  */
 function registerHandlers() {
   document.getElementById("LogoutButton").addEventListener("click", logout);
-  /*document.getElementById("NewExerciseButton").addEventListener("click", newEx);
-  document
-    .getElementById("StatusButton")
-    .addEventListener("click", changeStatus);
-  document.getElementById("NewACTButton").addEventListener("click", newACT);*/
   document
     .getElementById("exerciseContainer")
     .addEventListener("click", viewEx);
@@ -28,6 +23,11 @@ function logout() {
   window.location.href = "http://127.0.0.1:3000/index.html";
 }
 
+function viewEx() {
+  window.location.href = "http://127.0.0.1:3000/viewEx.html";
+  return;
+}
+
 function viewReports() {
   window.location.href = "http://127.0.0.1:3000/reports.html";
 }
@@ -37,10 +37,6 @@ function changeStatus() {
   if (canUserAccess(user)) {
     //TODO: switch status to opposite of what it currently is.
   }
-}
-
-function viewEx() {
-  window.location.href = "http://127.0.0.1:3000/viewEx.html";
 }
 
 function newACT() {
