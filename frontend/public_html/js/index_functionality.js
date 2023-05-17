@@ -5,17 +5,15 @@ function registerHandlers() {
 function login() {
   var username = document.getElementById("UserText");
   var password = document.getElementById("PasswordText");
-  console.log(username.value + ", " + password.value);
   if (username.value === "" || password.value === "") {
     alert("Please enter a valid username or password");
     return;
   }
-  //TODO: confirm user and password match.
   var data = {
     username: username,
     password: password,
   };
-
+  //TODO: Hash password
   fetch("http://127.0.0.1:5000/login", {
     method: "POST",
     mode: "cors",
@@ -25,15 +23,22 @@ function login() {
     body: JSON.stringify(data),
   })
     .then((res) => {
-      res.text().then((text) => {
-        console.log("Returned text: " + text);
+      res.json().then((text) => {
+        console.log(text);
+        if (text.response === "success") {
+          document.cookie += "username=" + text.username + ";";
+          document.cookie += "access=" + text.access + ";";
+          window.location.href = "http://localhost:3000/home.html";
+          return;
+        }
+        alert("Invalid username/password combination");
       });
     })
     .catch((error) => {
       alert(error.message);
     });
   //window.location.href = "http://localhost:3000/home.html";
-  //document.cookie = "username=" + username;
+  //document.cookie += "username=" + username;
 }
 
 document.addEventListener("DOMContentLoaded", registerHandlers);
