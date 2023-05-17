@@ -1,11 +1,11 @@
 function registerHandlers(){
-    document.getElementById("newExButton").addEventListener("click", newEx);
+    document.getElementById("newACTButton").addEventListener("click", newACT);
     document.getElementById("backButton").addEventListener("click", goBack);
 }
 
-function newEx(){
+function newACT(){
     console.log("all is good");
-    window.location.href = "http://localhost:3000/newEx.html";
+    window.location.href = "http://localhost:3000/newACT.html";
 }
 function goBack(){
     console.log("all is good");

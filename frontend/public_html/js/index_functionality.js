@@ -3,6 +3,7 @@ function registerHandlers() {
 }
 
 function login() {
+  window.location.href = "http://localhost:3000/home.html";
   console.log("Login button pressed");
   var username = document.getElementById("UserText");
   console.log("Username: " + username);
