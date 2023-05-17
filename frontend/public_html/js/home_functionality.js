@@ -1,12 +1,19 @@
 function registerHandlers() {
   document.getElementById("LogoutButton").addEventListener("click", logout);
-  document.getElementById("exerciseContainer").addEventListener("click", viewEx);
-  document.getElementById("aircraftContainer").addEventListener("click", viewACT);
-  document.getElementById("reportContainer").addEventListener("click", viewReports);
+  document
+    .getElementById("exerciseContainer")
+    .addEventListener("click", viewEx);
+  document
+    .getElementById("aircraftContainer")
+    .addEventListener("click", viewACT);
+  document
+    .getElementById("reportContainer")
+    .addEventListener("click", viewReports);
 }
 
 function logout() {
   console.log("Logging user out...");
+  document.cookie = "";
   window.location.href = "http://127.0.0.1:3000/index.html";
 }
 
@@ -25,10 +32,9 @@ function viewEx() {
   window.location.href = "http://127.0.0.1:3000/viewEx.html";
 }
 
-function viewACT(){
+function viewACT() {
   window.location.href = "http://127.0.0.1:3000/viewACTs.html";
 }
-
 
 function canUserAccess(user) {
   if (user == "PACAF") return true;
