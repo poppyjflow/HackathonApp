@@ -27,6 +27,8 @@ h1 {
   height: 300px;
   width: 600px;
   border: 2px solid #397367;
+  border-radius: 5px;
+  box-shadow: #42858c 5px 5px 15px 10px;
 }
 
 .imgContainer {
@@ -73,7 +75,7 @@ h1 {
 }
 
 #exerciseOverlay {
-  background-color: #397367;
+  background-color: #42858c;
 }
 
 #aircraftOverlay {
@@ -111,21 +113,23 @@ a {
 #LogoutButton {
   position: absolute;
   top: 35%;
-  background-color: #9ae4d9;
-  color: #35393c;
+  background-color: #35393c;
+  color: white;
   width: 130px;
   height: 70px;
-  border: 2px solid white;
+  border: 2px solid #9ae4d9;
   border-radius: 5px;
   font-size: 24px;
   font-family: "Courier New", Courier, monospace;
   font-weight: bold;
   right: 20px;
+  box-shadow: #35393c 5px 5px 15px 5px;
 }
 
 #LogoutButton:hover {
   cursor: pointer;
-  background-color: #4acfbb;
+  background-color: #1e2123;
+  border: 2px solid #9ae4d9;
 }
 
 #imgContainer {
@@ -146,7 +150,7 @@ a {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #63ccca;
+  background-color: #51acab;
   display: flex;
   flex-direction: column;
   align-items: center;
