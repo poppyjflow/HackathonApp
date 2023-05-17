@@ -5,7 +5,7 @@ exports.up = function (knex) {
     table.string('start_date').nullable();
     table.string('end_date').nullable();
     table.string('location').nullable();
-    table.string('majcom').nullable();
+    table.string('status').nullable();
   });
 };
 

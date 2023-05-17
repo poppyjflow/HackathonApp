@@ -44,7 +44,10 @@ class AircraftRef(Resource):
     #optional args:
     #   airframe
     #   year
-    #   num
+    #returned JSON fields:
+        #rows: number of rows found
+        #data:
+            #data found for each row
     def get(self):
 
         parser = reqparse.RequestParser()
@@ -70,6 +73,16 @@ class AircraftRef(Resource):
 
         query += ';'
         print(query)
+        
+        cursor = connect_info.conn_handle.cursor()
+        cursor.execute(query)
+        data = cursor.fetchall()
+
+        #No data found
+        if(len(data)) == 0:
+            msg = jsonify({"rows":"0"})
+            return msg
+
 
     #only PACAF sessions
     def post(self):
@@ -122,7 +135,7 @@ class Login(Resource):
 
         print(msg)
         msg.headers['Access-Control-Allow-Origin']='*'
-        msg.headers['Access-Control-Request-Method']='POST, GET'
+        msg.headers['Access-Control-Request-Method']='POST, GET, OPTIONS'
         msg.headers['Access-Control-Request-Headers']="Content-Type"
         return msg
 
