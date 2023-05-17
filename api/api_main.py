@@ -258,4 +258,3 @@ api.add_resource(AirfareCosts, "/airfare_costs")
 if __name__ == '__main__':
     connect_info = Connection(apikeys)
     app.run()
-
