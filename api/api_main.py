@@ -6,7 +6,7 @@ from flask import Flask, jsonify, make_response
 from flask_restful import Resource, Api, reqparse
 from flask_cors import CORS, cross_origin
 import pandas as pandas
-import ast
+#import ast
 import psycopg2
 
 apikeys = None
@@ -122,13 +122,7 @@ class AircraftRef(Resource):
 #Send and get exercise wing requests
 class WingRequest(Resource):
 
-    table_columns = [
-        'id', 'exercises_id', 'unit_name', 'tdy_from',
-        'tdy_to', 'airfare_type', 'days_qty', 'acft_type', 
-        'acft_qty', 'lodging_qty_gov', 'lodgin_qty_comm',
-        'lodging_qty_field', 'meals_provided_gov', 
-        'meals_provided_comm', 'meals_provided_field'
-    ]
+   
 
     #See wing requests for an exercise
     def get(self):
@@ -138,26 +132,44 @@ class WingRequest(Resource):
 
     #Submit a wing request for an exercise
     def post(self):
+
+        table_columns = [
+        'exercises_id', 'unit_name', 'tdy_from',
+        'tdy_to', 'airfare_type', 'days_qty', 'acft_type', 
+        'acft_qty', 'lodging_qty_gov', 'lodging_qty_comm',
+        'lodging_qty_field', 'meals_provided_gov', 
+        'meals_provided_comm', 'meals_provided_field'
+    ]
+
         parser = reqparse.RequestParser()
-        parser.add_argument("exercise_id", required=True)
-        parser.add_argument("unit_name", required=True)
-        parser.add_argument("tdy_from", required=True)
-        parser.add_argument("tdy_to", required=True)
-        parser.add_argument("airfare_type", required=True)
-        parser.add_argument("days_qty", required=True)
-        parser.add_argument("personnel_qty", required=True)
-        parser.add_argument("acft_type", required=True)
-        parser.add_argument("acft_qty", required=True)
-        parser.add_argument("lodging_qty_gov", required=True)
-        parser.add_argument("lodging_qty_comm", required=True)
-        parser.add_argument("lodging_qty_field", required=True)
-        parser.add_argument("meals_provided_gov", required=True)
-        parser.add_argument("meals_provided_comm", required=True)
-        parser.add_argument("meals_provided_field", required=True)
+        for arg in table_columns:
+            parser.add_argument(arg, required=True)
+
         args = parser.parse_args()
 
+        #INSERT INTO <table> (<columns>) <values>
+        query = 'INSERT INTO wing_request '
+        #columns for sql query
+        arg_cols = str(table_columns).replace('\'', ' ')
+        arg_cols = arg_cols.replace('[','(').replace(']',')')
+        #values for sql query
+        arg_vals = []
+        for key in table_columns:
+            arg_vals.append(args[key])
 
-        #add exercise row to table
+        arg_vals = str(arg_vals).replace('[','(').replace(']',')')
+        #fix booleans for postgres
+        arg_vals = arg_vals.replace('True','true').replace('False','false')
+        query +=  arg_cols + ' VALUES ' + arg_vals + ';'
+        print()
+        print(query)
+        print()
+        
+        cursor = connect_info.conn_handle.cursor()
+        cursor.execute(query)
+        
+
+
 
 #Get info from per diem chart
 class PerDiem(Resource):
