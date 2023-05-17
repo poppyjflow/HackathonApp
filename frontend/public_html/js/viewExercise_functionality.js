@@ -9,10 +9,7 @@ function registerHandlers() {
   //document.getElementById("backButton").addEventListener("click", goBack);
 }
 
-function newEx() {
-  console.log("all is good");
-  window.location.href = "http://localhost:3000/newEx.html";
-}
+
 function goBack() {
   console.log("all is good");
   window.location.href = "http://localhost:3000/home.html";
@@ -36,10 +33,9 @@ function rowAdd() {
 }
 
 const columnDefs = [
-  { field: "Aircraft Type", editable: true },
-  { field: "Aircraft Number", editable: true },
-  { field: "# of personnel needed", editable: true },
-];
+    { field: "Exercise Name", editable: true },
+    { field: "TDY Location", editable: true }
+  ];
 
 // specify the data
 const rowData = [{}, {}];
