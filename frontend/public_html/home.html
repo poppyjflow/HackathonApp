@@ -3,26 +3,49 @@
   <head>
     <title>Winning team</title>
     <link rel="stylesheet" href="./css/home_style.css" />
+    <link rel="icon" href="/images/home_logo.png" />
     <script src="./js/home_functionality.js"></script>
   </head>
   <body>
     <div id="header">
-      <a href="http://localhost:5000/home.html">
+      <a href="http://127.0.0.1:3000/home.html">
         <img id="logoImg" src="./images/home_logo.png" />
       </a>
       <button class="headerButton" id="LogoutButton">Log Out</button>
     </div>
     <div id="content">
       <h1>Exercises</h1>
-      <img class="clickableImg" src="./images/exercise_table.jpg" />
+      <div class="imgContainer" id="exerciseContainer">
+        <img
+          class="clickableImg"
+          id="exerciseImg"
+          src="./images/exercise_table.jpg"
+        />
+        <div class="imgOverlay" id="exerciseOverlay"></div>
+        <div class="imgHeader">Create/View/Modify Exercises</div>
+      </div>
       <h1>Aircraft Tables</h1>
-      <a href="http://localhost:5000/aircrafts.html">
-        <img class="clickableImg" src="./images/aircraft_table.jpg" />
-      </a>
+      <div class="imgContainer" id="aircraftContainer">
+        <img
+          class="clickableImg"
+          id="aircraftImg"
+          src="./images/aircraft_table.jpg"
+        />
+        <div class="imgOverlay" id="aircraftOverlay"></div>
+        <div class="imgHeader">Create/View/Modify Aircraft tables</div>
+      </div>
       <h1>Generate Report</h1>
-      <a href="http://localhost:5000/reports.html">
-        <img class="clickableImg" src="./images/generate_report.jpg" />
-      </a>
+      <div class="imgContainer" id="reportContainer">
+        <img
+          class="clickableImg"
+          id="reportImg"
+          src="./images/generate_report.jpg"
+        />
+        <div class="imgOverlay" id="reportOverlay"></div>
+        <div class="imgHeader" id="reportHeader">
+          Create/View/Modify Reports
+        </div>
+      </div>
     </div>
   </body>
 </html>

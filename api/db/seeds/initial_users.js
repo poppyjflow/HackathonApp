@@ -8,7 +8,7 @@ exports.seed = async function(knex) {
   await knex('users').insert([
     {
       id: 1,
-      unit: 'PACAF',
+      unit_name: 'PACAF',
       rank: 'SSgt',
       fname: 'Rick',
       lname: 'Sanchez',
@@ -18,7 +18,7 @@ exports.seed = async function(knex) {
     },
     {
       id: 2,
-      unit: '161 AW',
+      unit_name: '161 ARW',
       rank: '1Lt',
       fname: 'Morty',
       lname: 'Smith',
@@ -28,7 +28,7 @@ exports.seed = async function(knex) {
     },
     {
       id: 3,
-      unit: '101 ARW',
+      unit_name: '134 FS',
       rank: 'A1C',
       fname: 'Glootie',
       lname: 'Allen',

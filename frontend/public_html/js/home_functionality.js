@@ -1,23 +1,17 @@
 function registerHandlers() {
   document.getElementById("LogoutButton").addEventListener("click", logout);
-  document.getElementById("NewExerciseButton").addEventListener("click", newEx);
-  document
-    .getElementById("StatusButton")
-    .addEventListener("click", changeStatus);
-  document.getElementById("NewACTButton").addEventListener("click", newACT);
-  /*document
-    .getElementById("StatusButton")
-    .addEventListener("click", changeStatus);
-  document.getElementById("NewACTButton").addEventListener("click", newACT);*/
+  document.getElementById("exerciseContainer").addEventListener("click", viewEx);
+  document.getElementById("aircraftContainer").addEventListener("click", viewACT);
+  document.getElementById("reportContainer").addEventListener("click", viewReports);
 }
 
 function logout() {
   console.log("Logging user out...");
-  window.location.href = "http://localhost:5000/index.html";
+  window.location.href = "http://127.0.0.1:3000/index.html";
 }
 
 function viewReports() {
-  window.location.href = "http://localhost:5000/reports.html";
+  window.location.href = "http://127.0.0.1:3000/reports.html";
 }
 
 function changeStatus() {
@@ -27,19 +21,14 @@ function changeStatus() {
   }
 }
 
-function newEx() {
-  const user = getCookie("username");
-  if (canUserAccess(user)) {
-    window.location.href = "http://localhost:5000/exercise.html";
-  }
+function viewEx() {
+  window.location.href = "http://127.0.0.1:3000/viewEx.html";
 }
 
-function newACT() {
-  const user = getCookie("username");
-  if (canUserAccess(user)) {
-    window.location.href = "http://localhost:5000/ACT.html";
-  }
+function viewACT(){
+  window.location.href = "http://127.0.0.1:3000/viewACTs.html";
 }
+
 
 function canUserAccess(user) {
   if (user == "PACAF") return true;
