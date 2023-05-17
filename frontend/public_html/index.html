@@ -3,25 +3,72 @@
   <head>
     <title>Winning team</title>
     <link rel="stylesheet" href="./css/index_style.css" />
+    <link rel="icon" href="/images/home_logo.png" />
     <script src="./js/index_functionality.js"></script>
   </head>
   <body>
     <div id="header">
       <img id="logoImg" src="./images/home_logo.png" />
     </div>
-    <div id="content">
-      <h1>Login</h1>
-      <form>
-        <label for="username">Username</label>
-        <input type="text" name="username" id="UserText" />
-        <br />
-        <label for="password">Password</label>
-        <input type="password" name="password" id="PasswordText" />
-        <br />
-        <input type="button" name="login" id="LoginButton" value="Log In" />
-
-        <div id="invalidMsg"></div>
-      </form>
+    <div id="loginContainer" class="content">
+      <div class="container">
+        <h1>Login</h1>
+        <form>
+          <label for="username">Username</label>
+          <input type="text" name="username" id="UserText" />
+          <br />
+          <label for="password">Password</label>
+          <input type="password" name="password" id="PasswordText" />
+          <br />
+          <input
+            type="button"
+            name="login"
+            id="LoginButton"
+            value="Log In"
+            class="primaryButton"
+          />
+          <div class="combinedTextContainer">
+            <h4>Don't have an account?</h4>
+            <h4 class="highlightedText" id="createAccountText">Create One</h4>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div id="createAccountContainer" class="content">
+      <div class="container">
+        <h1>Create Account</h1>
+        <form>
+          <label for="createUsername">Username</label>
+          <input type="text" name="createUsername" id="CreateUserText" />
+          <br />
+          <label for="createPassword">Password</label>
+          <input
+            type="password"
+            name="createPassword"
+            id="CreatePasswordText"
+          />
+          <br />
+          <div id="adminContainer">
+            <h3>Admin</h4>
+            <label class="switch">
+              <input id="adminToggle" type="checkbox" />
+              <span class="slider"></span>
+            </label>
+          </div>
+          <br />
+          <input
+            type="button"
+            name="createAccount"
+            id="CreateAccountButton"
+            class="primaryButton"
+            value="Create Account"
+          />
+          <div class="combinedTextContainer">
+            <h4>Already have an account?</h4>
+            <h4 class="highlightedText" id="signInText">Sign In</h4>
+          </div>
+        </form>
+      </div>
     </div>
   </body>
 </html>
