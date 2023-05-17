@@ -1,23 +1,35 @@
+// When the content of the page is loaded, add functionality to all
+// necessary items
+document.addEventListener("DOMContentLoaded", registerHandlers);
+
+/*
+ * Adds event listeners to various HMTL elements using helper functions
+ */
 function registerHandlers() {
   document.getElementById("LogoutButton").addEventListener("click", logout);
-  document.getElementById("NewExerciseButton").addEventListener("click", newEx);
   document
-    .getElementById("StatusButton")
-    .addEventListener("click", changeStatus);
-  document.getElementById("NewACTButton").addEventListener("click", newACT);
-  /*document
-    .getElementById("StatusButton")
-    .addEventListener("click", changeStatus);
-  document.getElementById("NewACTButton").addEventListener("click", newACT);*/
+    .getElementById("exerciseContainer")
+    .addEventListener("click", viewEx);
 }
 
+/*
+ * Logs the user out by clearing the cookies which include the
+ * the currently logged in user's username and access status. Once
+ * the cookies are reset, redirect the user back to the login page
+ */
 function logout() {
   console.log("Logging user out...");
-  window.location.href = "http://localhost:5000/index.html";
+  document.cookie = "";
+  window.location.href = "http://127.0.0.1:3000/index.html";
+}
+
+function viewEx() {
+  window.location.href = "http://127.0.0.1:3000/viewEx.html";
+  return;
 }
 
 function viewReports() {
-  window.location.href = "http://localhost:5000/reports.html";
+  window.location.href = "http://127.0.0.1:3000/reports.html";
 }
 
 function changeStatus() {
@@ -27,17 +39,10 @@ function changeStatus() {
   }
 }
 
-function newEx() {
-  const user = getCookie("username");
-  if (canUserAccess(user)) {
-    window.location.href = "http://localhost:5000/exercise.html";
-  }
-}
-
 function newACT() {
   const user = getCookie("username");
   if (canUserAccess(user)) {
-    window.location.href = "http://localhost:5000/ACT.html";
+    window.location.href = "http://127.0.0.1:3000/ACT.html";
   }
 }
 
@@ -59,5 +64,3 @@ function getCookie(cName) {
   });
   return res;
 }
-
-document.addEventListener("DOMContentLoaded", registerHandlers);

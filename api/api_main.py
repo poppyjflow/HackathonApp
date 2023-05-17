@@ -44,7 +44,6 @@ class AircraftRef(Resource):
     #optional args:
     #   airframe
     #   year
-    #   num
     #returned JSON fields:
         #rows: number of rows found
         #data:
@@ -73,6 +72,7 @@ class AircraftRef(Resource):
 
 
         query += ';'
+        print(query)
         
         cursor = connect_info.conn_handle.cursor()
         cursor.execute(query)
@@ -82,7 +82,7 @@ class AircraftRef(Resource):
         if(len(data)) == 0:
             msg = jsonify({"rows":"0"})
             return msg
-        
+
 
     #only PACAF sessions
     def post(self):
@@ -145,5 +145,4 @@ api.add_resource(Exercises, "/exercises")
 if __name__ == '__main__':
     connect_info = Connection(apikeys)
     app.run()
-
 
