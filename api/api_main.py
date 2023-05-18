@@ -127,8 +127,42 @@ class WingRequest(Resource):
     #See wing requests for an exercise
     def get(self):
 
+        table_columns = [
+        'exercises_id', 'unit_name', 'tdy_from',
+        'tdy_to', 'airfare_type', 'days_qty', 'acft_type', 
+        'acft_qty', 'lodging_qty_gov', 'lodging_qty_comm',
+        'lodging_qty_field', 'meals_provided_gov', 
+        'meals_provided_comm', 'meals_provided_field'
+    ]
+
         parser = reqparse.RequestParser()
-        parser.add_argument("exercise_id", required=True)
+        parser.add_argument("exercises_id", required=True)
+
+        args = parser.parse_args()
+        
+        query = 'select * from wing_request where exercises_id = '
+        query += args['exercises_id']+';'
+        cursor = connect_info.conn_handle.cursor()
+        cursor.execute(query)
+        data = cursor.fetchall()
+
+        msg_dict = {}
+        nrow = 0
+        for row in data:
+            rd = {}
+            for num in range(1,len(table_columns)+1):
+                print(row)
+                print(num)
+                print(table_columns[num-1])
+                rd[table_columns[num-1]] = row[num]
+            msg_dict[str(row)] = rd
+            nrow += 1
+        msg_dict['rows'] = nrow
+
+        return addCors(jsonify(msg_dict))
+
+        
+
 
     #Submit a wing request for an exercise
     def post(self):
