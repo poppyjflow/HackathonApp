@@ -1,6 +1,5 @@
 exports.up = function (knex) {
   return knex.schema.createTable('aircraft_annual_reference', table => {
-    table.increments('id');
     table.integer('fiscal_year');
     table.string('airframe');
     table.integer('1acft').nullable();
