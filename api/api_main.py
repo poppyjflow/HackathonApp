@@ -370,42 +370,44 @@ class Login(Resource):
         parser = reqparse.RequestParser()
 
         #add arguments
-        parser.add_argument('username', required=True)
-        parser.add_argument('password', required=True)
+        parser.add_argument('email_addy', required=True)
         args = parser.parse_args()
-        username = args['username']
-        password = args['password']
+        username = args['email_addy']
 
         cursor = connect_info.conn_handle.cursor()
         query = 'select * from users where email_addy = \''+username +'\';'
         cursor.execute(query)
         logindata = cursor.fetchall() # returns list of tuples
 
-        if(len(logindata)) == 0: #bad username/password
+        if(len(logindata)) == 0: #bad username
             msg = jsonify({"response":"failure"})
             msg.headers['Access-Control-Allow-Origin']='*'
             msg.headers['Access-Control-Request-Method']='POST, GET'
             msg.headers['Access-Control-Request-Headers']="Content-Type"
             return msg
 
-        pass_db = logindata[0][6]
-        permissions = logindata[0][7]
-        username = logindata[0][5]
+        id = logindata[0][0]
+        unit_name = logindata[0][1]
         rank = logindata[0][2]
-        org = logindata[0][1]
+        fname = logindata[0][3]
+        lname = logindata[0][4]
+        email_addy = logindata[0][5]
+        passwd = logindata[0][6]
+        salt = logindata[0][7]
+        access_level = logindata[0][8]
 
-        if pass_db == password:
-            print("login success!")
-            msg = jsonify({"result":"success",
-            "access":permissions,
-            "username":username,
-            "rank":rank,
-            "org":org
-            })
-        else:
-            print("login failed: password incorrect")
-            msg = jsonify({"result":"failure"})
-            #make data to return call failure
+        print("login success!")
+        msg = jsonify({"result":"success",
+        "id":id,
+        "unit_name":unit_name,
+        "rank":rank,
+        "fname":fname,
+        "lname":lname,
+        "email_addy":email_addy,
+        "passwd":passwd,
+        "salt":salt,
+        "access_level":access_level
+        })
 
         msg.headers['Access-Control-Allow-Origin']='*'
         msg.headers['Access-Control-Request-Method']='POST, GET, OPTIONS'
