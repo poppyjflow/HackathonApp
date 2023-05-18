@@ -3,8 +3,12 @@ var isAdmin = false;
 
 // When the content of the page is loaded, add functionality to all
 // necessary items
-document.addEventListener("DOMContentLoaded", registerHandlers);
+document.addEventListener("DOMContentLoaded", main);
 
+function main() {
+  registerHandlers();
+  console.log(document.cookie);
+}
 /*
  * Adds event listeners to various HMTL elements using helper functions
  */
@@ -19,7 +23,6 @@ function registerHandlers() {
   document
     .getElementById("CreateAccountButton")
     .addEventListener("click", createAccount);
-
   // Whenever Admin toggle button is pressed, change isAdmin value
   document.getElementById("adminToggle").addEventListener("click", () => {
     isAdmin = !isAdmin;
@@ -65,8 +68,6 @@ async function createAccount() {
 
   console.log(text);
   //if (text.response === "success") {
-  document.cookie += "username=" + text.username + ";";
-  document.cookie += "access=" + text.access + ";";
   //window.location.href = "http://localhost:3000/home.html";
   return;
   //}
@@ -116,17 +117,15 @@ function switchToCreateScreen() {
  */
 
 async function login() {
-  window.location.href = "http://127.0.0.1:3000/home.html";
-  /*var username = document.getElementById("UserText");
+  var username = document.getElementById("UserText");
   var password = document.getElementById("PasswordText");
   if (username.value === "" || password.value === "") {
     alert("Please enter a valid username or password");
     return;
   }
   var loginBody = {
-    email_addy: username.value,
+    email_addy: username.value.toLowerCase(),
   };
-  console.log("ABOUT TO SEND: " + JSON.stringify(loginBody));
   var userResult = await fetch("http://127.0.0.1:5000/login", {
     method: "POST",
     mode: "cors",
@@ -140,12 +139,14 @@ async function login() {
   var text = await userResult.json().catch((error) => {
     alert(error.message);
   });
-  console.log("Returned user obj: " + JSON.stringify(text));*/
-
-  /*var hashBody = {
+  if (text.response != null) {
+    alert("Username not found");
+    return;
+  }
+  var hashBody = {
     salt: text.salt,
-    password: text.passwd,
-    username: text.email_addy,
+    password: password.value,
+    hashedPassword: text.passwd,
   };
   var hashResult = await fetch("http://127.0.0.1:3000/hashpassword", {
     method: "POST",
@@ -160,5 +161,11 @@ async function login() {
   var hashText = await hashResult.json().catch((error) => {
     alert(error.message);
   });
-  console.log(hashText);*/
+  if (hashText.Matched) {
+    console.log(text);
+    //document.cookie = "user=" + text + ";";
+    window.location.href = "http://127.0.0.1:3000/home.html";
+  } else {
+    alert("Invalid Password");
+  }
 }
