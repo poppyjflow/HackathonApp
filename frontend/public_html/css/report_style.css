@@ -13,21 +13,6 @@ body {
   border: 3px solid green;
   padding: 10px;
 }
-#backButton {
-  float: left;
-}
-#saveButton {
-  float: right;
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  font-family: "Courier New", Courier, monospace;
-}
 
 h3 {
   margin-left: 15px;
@@ -48,6 +33,25 @@ h3 {
   border-radius: 10px;
   box-shadow: #42858c 2px 2px 7px 7px;
   background-color: white;
+}
+
+.generalButton {
+  background-color: #35393c;
+  color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: 2px solid #42858c;
+  border-radius: 5px;
+  font-size: 20px;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+  box-shadow: #35393c 5px 5px 15px 5px;
+}
+
+.generalButton:hover {
+  cursor: pointer;
 }
 
 input {
@@ -80,6 +84,12 @@ h1 {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
+}
+
+#buttonContainer {
+  margin-top: 30px;
+  justify-content: center;
+  margin-bottom: 0;
 }
 
 #header {
