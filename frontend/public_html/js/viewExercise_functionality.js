@@ -30,12 +30,13 @@ function registerHandlers() {
   document.getElementById("addRow").addEventListener("click", rowAdd);
   document.getElementById("saveButton"), addEventListener("click", retriveData);
   document.getElementById("LogoutButton").addEventListener("click", logout);
-  document.getElementById("createTableButton").addEventListener("click", createTable);
-  document.getElementById("populateButton").addEventListener("click",testJson);
+  document
+    .getElementById("createTableButton")
+    .addEventListener("click", createTable);
+  document.getElementById("populateButton").addEventListener("click", testJson);
   //document.getElementById("newExButton").addEventListener("click", newEx);
   //document.getElementById("backButton").addEventListener("click", goBack);
 }
-
 
 function goBack() {
   console.log("all is good");
@@ -48,14 +49,14 @@ function logout() {
   window.location.href = "http://127.0.0.1:3000/index.html";
 }
 
-function createTable(){
+function createTable() {
   console.log("Should create table");
   gridOptions.api.setRowData([{}, {}]);
   gridOptions.api.setColumnDefs(columnDefs);
 }
 
 function retriveData() {
-  var nodes = []
+  var nodes = [];
   gridOptions.api.forEachNode((rowNode, index) => {
     console.log("node " + JSON.stringify(rowNode.data) + " is in the grid");
     nodes.push(JSON.stringify(rowNode.data));
@@ -69,7 +70,6 @@ function retriveData() {
   //var newTable = document.createElement(name);
   //newTable.text = name;
   //dropDown.add(newTable);
-
 }
 
 function rowAdd() {
@@ -79,33 +79,32 @@ function rowAdd() {
 
 const columnDefs = [
   { field: "exercise_name", editable: true },
-  { field: "location", editable: true }
+  { field: "location", editable: true },
 ];
 
-function testJson(){
+function testJson() {
   //This function uses made up data and populates the table
-  let myjsonobj = [{
-    "id": "2",
-    "exercise_name": "train",
-    "start_date": "2023-12-14",
-    "end_date": "2023-12-29",
-    "location": "Singapore",
-    "status": "tbd"
-},{
-  "id": "2",
-  "exercise_name": "fly planes",
-  "start_date": "2023-08-20",
-  "end_date": "2023-09-04",
-  "location": "Iran",
-  "status": "tbd"
+  let myjsonobj = [
+    {
+      id: "2",
+      exercise_name: "train",
+      start_date: "2023-12-14",
+      end_date: "2023-12-29",
+      location: "Singapore",
+      status: "tbd",
+    },
+    {
+      id: "2",
+      exercise_name: "fly planes",
+      start_date: "2023-08-20",
+      end_date: "2023-09-04",
+      location: "Iran",
+      status: "tbd",
+    },
+  ];
+  console.log(myjsonobj);
+  gridOptions.api.setRowData(myjsonobj);
 }
-
-];
-console.log(myjsonobj);
-gridOptions.api.setRowData(myjsonobj);
-}
-
-
 
 // specify the data
 const rowData = [{}, {}];
