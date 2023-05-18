@@ -115,7 +115,6 @@ function switchToCreateScreen() {
  * home.html
  */
 async function login() {
-  window.location.href = "http://localhost:3000/home.html";
   var username = document.getElementById("UserText");
   var password = document.getElementById("PasswordText");
   if (username.value === "" || password.value === "") {
@@ -145,7 +144,7 @@ async function login() {
   //if (text.response === "success") {
   document.cookie += "username=" + text.username + ";";
   document.cookie += "access=" + text.access + ";";
-  //window.location.href = "http://localhost:3000/home.html";
+  window.location.href = "http://localhost:3000/home.html";
   return;
   //}
   alert("Invalid username/password combination");
