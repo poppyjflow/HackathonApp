@@ -34,7 +34,7 @@ function registerHandlers() {
  * to be used throughout all pages on the website and change the page to
  * home.html
  */
-function createAccount() {
+async function createAccount() {
   var username = document.getElementById("CreateUserText");
   var password = document.getElementById("CreatePasswordText");
   if (username.value === "" || password.value === "") {
@@ -42,38 +42,46 @@ function createAccount() {
     return;
   }
 
-  var hashedPassword = hashPassword(password);
+  var hashedPassword = await hashPassword(password.value);
   var createUserBody = {
     username: username,
     password: hashedPassword,
     access: isAdmin ? "Admin" : "User",
   };
-  fetch("http://127.0.0.1:5000/createuser", {
+  var res = await fetch("http://127.0.0.1:5000/createuser", {
     method: "POST",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(createUserBody),
-  })
-    .then((res) => {
-      res.json().then((text) => {
-        console.log(text);
-        //if (text.response === "success") {
-        document.cookie += "username=" + text.username + ";";
-        document.cookie += "access=" + text.access + ";";
-        window.location.href = "http://localhost:3000/home.html";
-        return;
-        //}
-        alert("Invalid username/password combination");
-      });
-    })
-    .catch((error) => {
-      alert(error.message);
-    });
+  }).catch((error) => {
+    alert(error.message);
+  });
+
+  var text = await res.json().catch((error) => {
+    alert(error.message);
+  });
+
+  console.log(text);
+  //if (text.response === "success") {
+  document.cookie += "username=" + text.username + ";";
+  document.cookie += "access=" + text.access + ";";
+  //window.location.href = "http://localhost:3000/home.html";
+  return;
+  //}
+  alert("Invalid username/password combination");
 }
 
-function hashPassword(password) {
+async function hashPassword(password) {
+  var res = await fetch(`http://127.0.0.1:3000/hashpassword`).catch((error) => {
+    alert(error.message);
+  });
+  var text = await res.json().catch((error) => {
+    alert(error.message);
+  });
+
+  console.log("Hashed password: " + text);
   //TODO: Hash password
   return password;
 }
@@ -106,7 +114,8 @@ function switchToCreateScreen() {
  * to be used throughout all pages on the website and change the page to
  * home.html
  */
-function login() {
+async function login() {
+  window.location.href = "http://localhost:3000/home.html";
   var username = document.getElementById("UserText");
   var password = document.getElementById("PasswordText");
   if (username.value === "" || password.value === "") {
@@ -114,32 +123,30 @@ function login() {
     return;
   }
 
-  var hashedPassword = hashPassword(password);
+  var hashedPassword = await hashPassword(password.value);
   var loginBody = {
     username: username,
     password: hashedPassword,
   };
-  fetch("http://127.0.0.1:5000/login", {
+  var res = await fetch("http://127.0.0.1:5000/login", {
     method: "POST",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(loginBody),
-  })
-    .then((res) => {
-      res.json().then((text) => {
-        console.log(text);
-        //if (text.response === "success") {
-        document.cookie += "username=" + text.username + ";";
-        document.cookie += "access=" + text.access + ";";
-        window.location.href = "http://localhost:3000/home.html";
-        return;
-        //}
-        alert("Invalid username/password combination");
-      });
-    })
-    .catch((error) => {
-      alert(error.message);
-    });
+  }).catch((error) => {
+    alert(error.message);
+  });
+  var text = await res.json().catch((error) => {
+    alert(error.message);
+  });
+  console.log(text);
+  //if (text.response === "success") {
+  document.cookie += "username=" + text.username + ";";
+  document.cookie += "access=" + text.access + ";";
+  //window.location.href = "http://localhost:3000/home.html";
+  return;
+  //}
+  alert("Invalid username/password combination");
 }

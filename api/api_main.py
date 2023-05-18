@@ -6,7 +6,7 @@ from flask import Flask, jsonify, make_response
 from flask_restful import Resource, Api, reqparse
 from flask_cors import CORS, cross_origin
 import pandas as pandas
-import ast
+#import ast
 import psycopg2
 
 apikeys = None
@@ -15,6 +15,12 @@ app = Flask(__name__)
 cors = CORS(app)
 api = Api(app)
 
+#utilities
+def addCors(msg):
+    msg.headers['Access-Control-Allow-Origin']='*'
+    msg.headers['Access-Control-Request-Method']='POST, GET'
+    msg.headers['Access-Control-Request-Headers']="Content-Type"
+    return msg
 
 class Connection:
 
@@ -104,8 +110,8 @@ class AircraftRef(Resource):
             nrow += 1
         msg_dict['rows'] = str(nrow)
 
-        return jsonify(msg_dict)
-
+        return addCors(jsonify(msg_dict))
+        
     #Edit the aircraft reference
     #only PACAF sessions
     def post(self):
@@ -116,13 +122,54 @@ class AircraftRef(Resource):
 #Send and get exercise wing requests
 class WingRequest(Resource):
 
+   
+
     #See wing requests for an exercise
     def get(self):
-        pass
+
+        parser = reqparse.RequestParser()
+        parser.add_argument("exercise_id", required=True)
 
     #Submit a wing request for an exercise
     def post(self):
-        pass
+
+        table_columns = [
+        'exercises_id', 'unit_name', 'tdy_from',
+        'tdy_to', 'airfare_type', 'days_qty', 'acft_type', 
+        'acft_qty', 'lodging_qty_gov', 'lodging_qty_comm',
+        'lodging_qty_field', 'meals_provided_gov', 
+        'meals_provided_comm', 'meals_provided_field'
+    ]
+
+        parser = reqparse.RequestParser()
+        for arg in table_columns:
+            parser.add_argument(arg, required=True)
+
+        args = parser.parse_args()
+
+        #INSERT INTO <table> (<columns>) <values>
+        query = 'INSERT INTO wing_request '
+        #columns for sql query
+        arg_cols = str(table_columns).replace('\'', ' ')
+        arg_cols = arg_cols.replace('[','(').replace(']',')')
+        #values for sql query
+        arg_vals = []
+        for key in table_columns:
+            arg_vals.append(args[key])
+
+        arg_vals = str(arg_vals).replace('[','(').replace(']',')')
+        #fix booleans for postgres
+        arg_vals = arg_vals.replace('True','true').replace('False','false')
+        query +=  arg_cols + ' VALUES ' + arg_vals + ';'
+        print()
+        print(query)
+        print()
+        
+        cursor = connect_info.conn_handle.cursor()
+        cursor.execute(query)
+        
+
+
 
 #Get info from per diem chart
 class PerDiem(Resource):
@@ -208,6 +255,12 @@ class Exercises(Resource):
 #   username (email)
 #   password (hashed password)
 #TODO: return username+rank
+
+class AirfareCosts(Resource):
+    pass
+
+class LodgingCosts(Resource):
+    pass
 class Login(Resource):
 
     #Attempt to login
@@ -267,8 +320,8 @@ api.add_resource(AircraftRef, "/aircraft_reference")
 api.add_resource(Exercises, "/exercises")
 api.add_resource(WingRequest, "/wingrequest")
 api.add_resource(PerDiem, "/perdiem")
+api.add_resource(AirfareCosts, "/airfare_costs")
 
 if __name__ == '__main__':
     connect_info = Connection(apikeys)
     app.run()
-
