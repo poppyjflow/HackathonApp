@@ -107,7 +107,7 @@ class AircraftRef(Resource):
             rd['year'] = row[1]
             #cost for each number of aircraft
             for num_workers in range(3,len(row)):
-                rd['acft'+str(num_workers)] = row[num_workers]
+                rd['acft'+str(num_workers-2)] = row[num_workers]
             msg_dict[str(nrow)] = rd
             nrow += 1
         msg_dict['rows'] = str(nrow)
@@ -133,7 +133,7 @@ class AircraftRef(Resource):
         args = parser.parse_args()
 
         #delete existing table entries
-        query = 'DELETE from aircraft_reference;'
+        query = 'DELETE from aircraft_annual_reference;'
         cursor = connect_info.conn_handle.cursor()
         cursor.execute(query)
 
@@ -147,7 +147,7 @@ class AircraftRef(Resource):
 
         #iterate through table rows and insert them
         for row in table:
-            query = 'INSERT INTO aircraft_reference '
+            query = 'INSERT INTO aircraft_annual_reference '
             arg_cols = str(table_columns).replace('\'', ' ')
             arg_cols = arg_cols.replace('[','(').replace(']',')')
             #values for sql query
