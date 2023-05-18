@@ -9,6 +9,7 @@ function main() {
 }
 
 function registerHandlers() {
+  console.log("Registering handlers");
   document.getElementById("LogoutButton").addEventListener("click", logout);
   document
     .getElementById("genReportButton")
@@ -94,24 +95,24 @@ function buildAircraftList() {
     id: "1",
     fiscal_year: "2023",
     airframe: "F-22",
-    "1acft": "50",
-    "2acft": "25",
-    "3acft": "20",
-    "4acft": "N/A",
-    "5acft": "1",
-    "6acft": "N/A",
+    acft1: "50",
+    acft2: "25",
+    acft3: "20",
+    acft4: "N/A",
+    acft5: "1",
+    acft6: "N/A",
   });
   mainAircraftList.push({
     id: "2",
     fiscal_year: "2023",
     airframe: "C-5",
-    "1acft": "5",
-    "2acft": "25",
-    "3acft": "10",
-    "4acft": "50",
-    "5acft": "N/A",
-    "6acft": "N/A",
-    "16acft": "100",
+    acft1: "5",
+    acft2: "25",
+    acft3: "10",
+    acft4: "50",
+    acft5: "N/A",
+    acft6: "N/A",
+    "16acft16": "100",
   });
 }
 
