@@ -114,21 +114,20 @@ function switchToCreateScreen() {
  * to be used throughout all pages on the website and change the page to
  * home.html
  */
+
 async function login() {
-  window.location.href = "http://localhost:3000/home.html";
-  var username = document.getElementById("UserText");
+  window.location.href = "http://127.0.0.1:3000/home.html";
+  /*var username = document.getElementById("UserText");
   var password = document.getElementById("PasswordText");
   if (username.value === "" || password.value === "") {
     alert("Please enter a valid username or password");
     return;
   }
-  var hashedPassword = await hashPassword(password.value);
   var loginBody = {
-    username: username.value,
-    password: hashedPassword,
+    email_addy: username.value,
   };
-  console.log("ABOUT TO SEND REQUEST: " + JSON.stringify(loginBody));
-  var res = await fetch("http://127.0.0.1:5000/login", {
+  console.log("ABOUT TO SEND: " + JSON.stringify(loginBody));
+  var userResult = await fetch("http://127.0.0.1:5000/login", {
     method: "POST",
     mode: "cors",
     headers: {
@@ -138,15 +137,28 @@ async function login() {
   }).catch((error) => {
     alert(error.message);
   });
-  var text = await res.json().catch((error) => {
+  var text = await userResult.json().catch((error) => {
     alert(error.message);
   });
-  console.log(text);
-  //if (text.response === "success") {
-  document.cookie += "username=" + text.username + ";";
-  document.cookie += "access=" + text.access + ";";
-  window.location.href = "http://localhost:3000/home.html";
-  return;
-  //}
-  alert("Invalid username/password combination");
+  console.log("Returned user obj: " + JSON.stringify(text));*/
+
+  /*var hashBody = {
+    salt: text.salt,
+    password: text.passwd,
+    username: text.email_addy,
+  };
+  var hashResult = await fetch("http://127.0.0.1:3000/hashpassword", {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(hashBody),
+  }).catch((error) => {
+    alert(error.message);
+  });
+  var hashText = await hashResult.json().catch((error) => {
+    alert(error.message);
+  });
+  console.log(hashText);*/
 }

@@ -10,41 +10,39 @@ const columnDefs = [
   { field: "status", editable: true },
 ];
 
-// let the grid know which columns and what data to use
 const gridOptions = {
   columnDefs: columnDefs,
   rowData: mainExerciseList,
 };
 
+// let the grid know which columns and what data to use
+
 function main() {
   buildList();
   registerHandlers();
-  const gridDiv = document.querySelector("#myGrid");
-  new agGrid.Grid(gridDiv, gridOptions);
   //gridOptions.api.setRowData(mainExerciseList);
 }
 
 function registerHandlers() {
   document.getElementById("addRow").addEventListener("click", rowAdd);
-  //document.getElementById("saveButton"), addEventListener("click", retrieveData);
   document.getElementById("saveButton").addEventListener("click", retrieveData);
   document.getElementById("LogoutButton").addEventListener("click", logout);
 }
 
 function retrieveData() {
-  // TODO: When user presses Add row, need to create blank new exercise object
-  // in mainExerciseList
-  console.log("Final list: " + JSON.stringify(mainExerciseList));
+  var pushableExercises = { table: {} };
+  for (let i = 0; i < mainExerciseList.length; i++) {
+    pushableExercises.table[`${i}`] = mainExerciseList[i];
+  }
+  console.log("Final list: " + JSON.stringify(pushableExercises));
 
-  /* Once final list has passed all value checks, send it back to backend to update
-  // the database
-  fetch("http://127.0.0.1:5000/SOME_EXERCISE_ENDPOINT", {
+  fetch("http://127.0.0.1:5000/exercises", {
     method: "POST",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(mainExerciseList),
+    body: JSON.stringify(pushableExercises),
   })
     .then((res) => {
       res.json().then((text) => {
@@ -54,14 +52,13 @@ function retrieveData() {
     .catch((error) => {
       alert(error.message);
     });
-    */
 
-  var nodes = [];
+  /*var nodes = [];
   gridOptions.api.forEachNode((rowNode, index) => {
     console.log("node " + JSON.stringify(rowNode.data) + " is in the grid");
     nodes.push(JSON.stringify(rowNode.data));
     // convert this array to json and send it to db.
-  });
+  });*/
   // I tried to get a popup to save the table and enter a name for it, but i was having
   // trouble. I will come back to this - Henry
   // Code that sucks below
@@ -72,9 +69,15 @@ function retrieveData() {
   //dropDown.add(newTable);
 }
 
+function initializeGrid() {
+  //console.log("Initializing grid w: " + JSON.stringify(mainExerciseList));
+  const gridDiv = document.querySelector("#myGrid");
+  new agGrid.Grid(gridDiv, gridOptions);
+}
+
 function buildList() {
-  /* Make fetch call to actually update mainExerciseList
-  fetch("http://127.0.0.1:5000/SOME_EXERCISE_ENDPOINT", {
+  // Make fetch call to actually update mainExerciseList
+  fetch("http://127.0.0.1:5000/exercises", {
     method: "GET",
     mode: "cors",
     headers: {
@@ -83,29 +86,15 @@ function buildList() {
   })
     .then((res) => {
       res.json().then((text) => {
-        console.log(text);
+        for (let i = 0; i < text.rows; i++) {
+          mainExerciseList.push(text[`${i}`]);
+        }
+        initializeGrid();
       });
     })
     .catch((error) => {
       alert(error.message);
-    });*/
-
-  mainExerciseList.push({
-    id: "1",
-    exercise_name: "train",
-    start_date: "2023-12-14",
-    end_date: "2023-12-29",
-    location: "Singapore",
-    status: "open",
-  });
-  mainExerciseList.push({
-    id: "2",
-    exercise_name: "fly planes",
-    start_date: "2023-08-20",
-    end_date: "2023-09-04",
-    location: "Iran",
-    status: "closed",
-  });
+    });
 }
 
 function logout() {
@@ -114,9 +103,23 @@ function logout() {
   window.location.href = "http://127.0.0.1:3000/index.html";
 }
 
+function wipeoutGrid() {
+  gridOptions.api.setRowData([]);
+  gridOptions.api.setRowData(mainExerciseList);
+}
+
 function rowAdd() {
   console.log("Row being added");
-  gridOptions.api.applyTransaction({ add: [{}] });
+  var id = mainExerciseList.length + 1;
+  mainExerciseList.push({
+    exercise_name: "",
+    start_date: "",
+    end_date: "",
+    location: "",
+    status: "",
+  });
+  wipeoutGrid();
+  //gridOptions.api.applyTransaction({ add: [{}] });
 }
 
 /*function testJson() {
