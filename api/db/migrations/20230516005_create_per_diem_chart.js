@@ -1,5 +1,6 @@
 exports.up = function (knex) {
   return knex.schema.createTable('per_diem_chart', table => {
+    table.increments('id');
     table.string('country').nullable();
     table.string('location').nullable();
     table.string('season_code').nullable();

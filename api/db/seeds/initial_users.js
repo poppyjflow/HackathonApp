@@ -7,7 +7,6 @@ exports.seed = async function(knex) {
   await knex('users').del()
   await knex('users').insert([
     {
-      id: 1,
       unit_name: 'PACAF',
       rank: 'SSgt',
       fname: 'Rick',
@@ -17,7 +16,6 @@ exports.seed = async function(knex) {
       access_level: 'PACAF',
     },
     {
-      id: 2,
       unit_name: '161 ARW',
       rank: '1Lt',
       fname: 'Morty',
@@ -27,7 +25,6 @@ exports.seed = async function(knex) {
       access_level: 'WING',
     },
     {
-      id: 3,
       unit_name: '134 FS',
       rank: 'A1C',
       fname: 'Glootie',

@@ -7,7 +7,6 @@ exports.seed = async function(knex) {
   await knex('aircraft_annual_reference').del()
   await knex('aircraft_annual_reference').insert([
     {
-      id: 1,
       fiscal_year: 2021,
       airframe: 'KC-135',
       '1acft': 75,
@@ -28,7 +27,6 @@ exports.seed = async function(knex) {
       '16acft': 280,
     },
     {
-      id: 2,
       fiscal_year: 2021,
       airframe: 'F-22',
       '1acft': null,
@@ -49,7 +47,6 @@ exports.seed = async function(knex) {
       '16acft': 115,
     },
     {
-      id: 3,
       fiscal_year: 2021,
       airframe: 'F-35',
       '1acft': null,
@@ -70,7 +67,6 @@ exports.seed = async function(knex) {
       '16acft': 115,
     },
     {
-      id: 4,
       fiscal_year: 2021,
       airframe: 'A-10',
       '1acft': null,
@@ -91,7 +87,6 @@ exports.seed = async function(knex) {
       '16acft': 115,
     },
     {
-      id: 5,
       fiscal_year: 2021,
       airframe: 'F-15C',
       '1acft': null,
@@ -112,7 +107,6 @@ exports.seed = async function(knex) {
       '16acft': 115,
     },
     {
-      id: 6,
       fiscal_year: 2021,
       airframe: 'C-130',
       '1acft': 75,
@@ -133,7 +127,6 @@ exports.seed = async function(knex) {
       '16acft': 280,
     },
     {
-      id: 7,
       fiscal_year: 2021,
       airframe: 'C-17',
       '1acft': 75,
@@ -154,7 +147,6 @@ exports.seed = async function(knex) {
       '16acft': 280,
     },
     {
-      id: 8,
       fiscal_year: 2021,
       airframe: 'C-5',
       '1acft': 75,
