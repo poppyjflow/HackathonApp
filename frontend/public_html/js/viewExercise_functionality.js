@@ -31,6 +31,7 @@ function registerHandlers() {
   document.getElementById("saveButton"), addEventListener("click", retriveData);
   document.getElementById("LogoutButton").addEventListener("click", logout);
   document.getElementById("createTableButton").addEventListener("click", createTable);
+  document.getElementById("populateButton").addEventListener("click",testJson);
   //document.getElementById("newExButton").addEventListener("click", newEx);
   //document.getElementById("backButton").addEventListener("click", goBack);
 }
@@ -54,9 +55,21 @@ function createTable(){
 }
 
 function retriveData() {
+  var nodes = []
   gridOptions.api.forEachNode((rowNode, index) => {
     console.log("node " + JSON.stringify(rowNode.data) + " is in the grid");
+    nodes.push(JSON.stringify(rowNode.data));
+    // convert this array to json and send it to db.
   });
+  // I tried to get a popup to save the table and enter a name for it, but i was having
+  // trouble. I will come back to this - Henry
+  // Code that sucks below
+  //let name = prompt("Enter a name for this table", "Enter Name");
+  //var dropDown = document.getElementById("tableDropdown")
+  //var newTable = document.createElement(name);
+  //newTable.text = name;
+  //dropDown.add(newTable);
+
 }
 
 function rowAdd() {
@@ -65,9 +78,34 @@ function rowAdd() {
 }
 
 const columnDefs = [
-  { field: "Exercise Name", editable: true },
-  { field: "TDY Location", editable: true }
+  { field: "exercise_name", editable: true },
+  { field: "location", editable: true }
 ];
+
+function testJson(){
+  //This function uses made up data and populates the table
+  let myjsonobj = [{
+    "id": "2",
+    "exercise_name": "train",
+    "start_date": "2023-12-14",
+    "end_date": "2023-12-29",
+    "location": "Singapore",
+    "status": "tbd"
+},{
+  "id": "2",
+  "exercise_name": "fly planes",
+  "start_date": "2023-08-20",
+  "end_date": "2023-09-04",
+  "location": "Iran",
+  "status": "tbd"
+}
+
+];
+console.log(myjsonobj);
+gridOptions.api.setRowData(myjsonobj);
+}
+
+
 
 // specify the data
 const rowData = [{}, {}];
