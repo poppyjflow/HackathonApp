@@ -9,7 +9,7 @@ exports.seed = async function(knex) {
     {
       exercises_id: 4,
       unit_name: '161 ARW',
-      tdy_from: 'Phoenix, AZ',
+      tdy_from: 'PHX',
       tdy_to: 'Bucholz Army Airfield, Marshall Islands',
       airfare_type: 'MIL',
       days_qty: 9,
@@ -26,7 +26,7 @@ exports.seed = async function(knex) {
     {
       exercises_id: 1,
       unit_name: '161 ARW',
-      tdy_from: 'Phoenix, AZ',
+      tdy_from: 'PHX',
       tdy_to: 'Andersen AFB, Guam',
       airfare_type: 'MIL',
       days_qty: 17,
@@ -43,7 +43,7 @@ exports.seed = async function(knex) {
     {
       exercises_id: 4,
       unit_name: '134 FS',
-      tdy_from: 'South Burlington, Vermont',
+      tdy_from: 'BTV',
       tdy_to: 'Likiep Atoll, Marshall Islands',
       airfare_type: 'COMM',
       days_qty: 9,
@@ -60,7 +60,7 @@ exports.seed = async function(knex) {
     {
       exercises_id: 1,
       unit_name: '134 FS',
-      tdy_from: 'South Burlington, Vermont',
+      tdy_from: 'BTV',
       tdy_to: 'Antonio B. Won Pat Intl Airport, Guam',
       airfare_type: 'COMM',
       days_qty: 17,

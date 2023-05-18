@@ -7,6 +7,7 @@ exports.up = function (knex) {
     table.string('lname').notNullable();
     table.string('email_addy').notNullable().unique();
     table.string('passwd').notNullable();
+    table.string('salt').notNullable();
     table.string('access_level').notNullable();
   });
 };
