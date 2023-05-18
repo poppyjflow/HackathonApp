@@ -1,5 +1,6 @@
 exports.up = function (knex) {
   return knex.schema.createTable('users', table => {
+    table.increments('id');
     table.string('unit_name');
     table.string('rank');
     table.string('fname').notNullable();

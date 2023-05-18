@@ -1,5 +1,6 @@
 exports.up = function (knex) {
   return knex.schema.createTable('wing_request', table => {
+    table.increments('id');
     table.integer('exercises_id').references('id').inTable('exercises').onDelete('CASCADE');
     table.string('unit_name');
     table.string('tdy_from').nullable();
