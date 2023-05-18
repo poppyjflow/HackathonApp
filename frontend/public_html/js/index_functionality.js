@@ -74,16 +74,16 @@ async function createAccount() {
 }
 
 async function hashPassword(password) {
-  var res = await fetch(`http://127.0.0.1:3000/hashpassword`).catch((error) => {
-    alert(error.message);
-  });
+  var res = await fetch(`http://127.0.0.1:3000/hashpassword/${password}`).catch(
+    (error) => {
+      alert(error.message);
+    }
+  );
   var text = await res.json().catch((error) => {
     alert(error.message);
   });
 
-  console.log("Hashed password: " + text);
-  //TODO: Hash password
-  return password;
+  return text.Password;
 }
 
 /*
@@ -121,12 +121,12 @@ async function login() {
     alert("Please enter a valid username or password");
     return;
   }
-
   var hashedPassword = await hashPassword(password.value);
   var loginBody = {
-    username: username,
+    username: username.value,
     password: hashedPassword,
   };
+  console.log("ABOUT TO SEND REQUEST: " + JSON.stringify(loginBody));
   var res = await fetch("http://127.0.0.1:5000/login", {
     method: "POST",
     mode: "cors",
