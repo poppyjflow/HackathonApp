@@ -111,27 +111,60 @@ class AircraftRef(Resource):
         msg_dict['rows'] = str(nrow)
 
         return addCors(jsonify(msg_dict))
-        
-    #Edit the aircraft reference
+
+    #Add a new aircraft reference
     #only PACAF sessions
     def post(self):
+        table_columns = [
+        'fiscal_year', 'airframe',
+        'acft1', 'acft2', 'acft3', 'acft4',
+        'acft5', 'acft6', 'acft7', 'acft8',
+        'acft9', 'acft10', 'acft11', 'acft12',
+        'acft13', 'acft14', 'acft15', 'acft16'
+    ]
 
-        pass
+        parser = reqparse.RequestParser()
+        for arg in table_columns:
+            parser.add_argument(arg, required=True)
+
+        args = parser.parse_args()
+
+        #INSERT INTO <table> (<columns>) <values>
+        query = 'INSERT INTO aircraft_annual_reference '
+        #columns for sql query
+        arg_cols = str(table_columns).replace('\'', ' ')
+        arg_cols = arg_cols.replace('[','(').replace(']',')')
+        #values for sql query
+        arg_vals = []
+        for key in table_columns:
+            arg_vals.append(args[key])
+
+        arg_vals = str(arg_vals).replace('[','(').replace(']',')')
+        #fix booleans for postgres
+        arg_vals = arg_vals.replace('True','true').replace('False','false')
+        query +=  arg_cols + ' VALUES ' + arg_vals + ';'
+        print()
+        print(query)
+        print()
+
+        cursor = connect_info.conn_handle.cursor()
+        cursor.execute(query)
+        connect_info.conn_handle.commit()
 
 
 #Send and get exercise wing requests
 class WingRequest(Resource):
 
-   
+
 
     #See wing requests for an exercise
     def get(self):
 
         table_columns = [
         'exercises_id', 'unit_name', 'tdy_from',
-        'tdy_to', 'airfare_type', 'days_qty', 'acft_type', 
+        'tdy_to', 'airfare_type', 'days_qty', 'acft_type',
         'acft_qty', 'lodging_qty_gov', 'lodging_qty_comm',
-        'lodging_qty_field', 'meals_provided_gov', 
+        'lodging_qty_field', 'meals_provided_gov',
         'meals_provided_comm', 'meals_provided_field'
     ]
 
@@ -139,7 +172,7 @@ class WingRequest(Resource):
         parser.add_argument("exercises_id", required=True)
 
         args = parser.parse_args()
-        
+
         query = 'select * from wing_request where exercises_id = '
         query += args['exercises_id']+';'
         cursor = connect_info.conn_handle.cursor()
@@ -161,7 +194,7 @@ class WingRequest(Resource):
 
         return addCors(jsonify(msg_dict))
 
-        
+
 
 
     #Submit a wing request for an exercise
@@ -169,9 +202,9 @@ class WingRequest(Resource):
 
         table_columns = [
         'exercises_id', 'unit_name', 'tdy_from',
-        'tdy_to', 'airfare_type', 'days_qty', 'acft_type', 
+        'tdy_to', 'airfare_type', 'days_qty', 'acft_type',
         'acft_qty', 'lodging_qty_gov', 'lodging_qty_comm',
-        'lodging_qty_field', 'meals_provided_gov', 
+        'lodging_qty_field', 'meals_provided_gov',
         'meals_provided_comm', 'meals_provided_field'
     ]
 
@@ -198,21 +231,53 @@ class WingRequest(Resource):
         print()
         print(query)
         print()
-        
+
         cursor = connect_info.conn_handle.cursor()
         cursor.execute(query)
-        
+
 
 
 
 #Get info from per diem chart
 class PerDiem(Resource):
+    #Get exercises from the per_diem_chart table
     def get(self):
-        pass
+        query = "select * from per_diem_chart"
+        query += ';'
+        print(query)
 
-#TODO:
-    #submit an exercise
-    #view an exercise
+        cursor = connect_info.conn_handle.cursor()
+        cursor.execute(query)
+        data = cursor.fetchall()
+
+        #No data found
+        if(len(data)) == 0:
+            msg = jsonify({"rows":"0"})
+            return msg
+
+        #format response data
+        msg_dict = {}
+        nrow = 0
+        for row in data: #each row corresponds to an exercise
+            rd = {}
+            rd['id'] = row[0]
+            rd['country'] = row[1]
+            rd['location'] = row[2]
+            rd['season_code'] = row[3]
+            rd['season_start_date'] = row[4]
+            rd['season_end_date'] = row[5]
+            rd['lodging_rate'] = row[6]
+            rd['meals_incidentals'] = row[7]
+            rd['per_diem'] = row[8]
+            rd['effective_date'] = row[9]
+            rd['footnote_reference'] = row[10]
+            rd['location_code'] = row[11]
+            msg_dict[str(nrow)] = rd
+            nrow += 1
+        msg_dict['rows'] = str(nrow)
+
+        return jsonify(msg_dict)
+
 class Exercises(Resource):
 
     #Get exercises from the exercise table
@@ -283,6 +348,7 @@ class Exercises(Resource):
 
         cursor = connect_info.conn_handle.cursor()
         cursor.execute(query)
+        connect_info.conn_handle.commit()
 
 #Login to site
 #Required args:
