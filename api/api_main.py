@@ -414,9 +414,6 @@ class Login(Resource):
         return msg
 
 
-
-
-
 api.add_resource(Login, "/login")
 api.add_resource(AircraftRef, "/aircraft_reference")
 api.add_resource(Exercises, "/exercises")

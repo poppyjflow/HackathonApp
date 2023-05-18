@@ -31,29 +31,35 @@ const gridOptions = {
 function main() {
   buildList();
   registerHandlers();
+}
+
+function initializeGrid() {
+  console.log("Initializing grid w: " + JSON.stringify(mainExerciseList));
   const gridDiv = document.querySelector("#myGrid");
   new agGrid.Grid(gridDiv, gridOptions);
 }
 
-function buildList() {
-  /* Make fetch call to actually update mainAircraftList
-  fetch("http://127.0.0.1:5000/SOME_AIRCRAFT_ENDPOINT", {
+async function buildList() {
+  // Make fetch call to actually update mainAircraftList
+  var res = await fetch("http://127.0.0.1:5000/aircraft_reference", {
     method: "GET",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
     },
-  })
-    .then((res) => {
-      res.json().then((text) => {
-        console.log(text);
-      });
-    })
-    .catch((error) => {
-      alert(error.message);
-    });*/
+  }).catch((error) => {
+    alert(error.message);
+  });
+  var text = await res.json().catch((error) => {
+    alert(error.message);
+  });
+  for (let i = 0; i < text.rows; i++) {
+    mainExerciseList.push(text[`${i}`]);
+  }
+  initializeGrid();
+  console.log(text);
 
-  mainAircraftList.push({
+  /*mainAircraftList.push({
     id: "1",
     fiscal_year: "2023",
     airframe: "F-22",
@@ -75,13 +81,12 @@ function buildList() {
     "5acft": "N/A",
     "6acft": "N/A",
     "16acft": "100",
-  });
+  });*/
 }
 
 function registerHandlers() {
   document.getElementById("addRow").addEventListener("click", rowAdd);
-  document.getElementById("saveButton"),
-    addEventListener("click", retrieveData);
+  document.getElementById("saveButton").addEventListener("click", retrieveData);
   document.getElementById("LogoutButton").addEventListener("click", logout);
 }
 
@@ -89,16 +94,16 @@ function retrieveData() {
   // TODO: When user presses Add row, need to create blank new exercise object
   // in mainAircraftList
   console.log("Final list: " + JSON.stringify(mainAircraftList));
-  
-  /* Once final list has passed all value checks, send it back to backend to update
+
+  // Once final list has passed all value checks, send it back to backend to update
   // the database
-  fetch("http://127.0.0.1:5000/SOME_AIRCRAFT_ENDPOINT", {
-    method: "PUT",
+  fetch("http://127.0.0.1:5000/aircraft_reference", {
+    method: "POST",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(mainAircraftList),
+    body: JSON.stringify({ table: mainAircraftList }),
   })
     .then((res) => {
       res.json().then((text) => {
@@ -108,13 +113,13 @@ function retrieveData() {
     .catch((error) => {
       alert(error.message);
     });
-    */
-  var nodes = [];
+
+  /*var nodes = [];
   gridOptions.api.forEachNode((rowNode, index) => {
     console.log("node " + JSON.stringify(rowNode.data) + " is in the grid");
     nodes.push(JSON.stringify(rowNode.data));
     // do something with this data. Need to send it back to db.
-  });
+  });*/
 }
 
 function logout() {
