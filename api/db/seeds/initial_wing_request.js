@@ -7,7 +7,6 @@ exports.seed = async function(knex) {
   await knex('wing_request').del()
   await knex('wing_request').insert([
     {
-      id: 1,
       exercises_id: 4,
       unit_name: '161 ARW',
       tdy_from: 'Phoenix, AZ',
@@ -25,7 +24,6 @@ exports.seed = async function(knex) {
       meals_provided_field: true,
     },
     {
-      id: 2,
       exercises_id: 1,
       unit_name: '161 ARW',
       tdy_from: 'Phoenix, AZ',
@@ -43,7 +41,6 @@ exports.seed = async function(knex) {
       meals_provided_field: true,
     },
     {
-      id: 3,
       exercises_id: 4,
       unit_name: '134 FS',
       tdy_from: 'South Burlington, Vermont',
@@ -61,7 +58,6 @@ exports.seed = async function(knex) {
       meals_provided_field: true,
     },
     {
-      id: 4,
       exercises_id: 1,
       unit_name: '134 FS',
       tdy_from: 'South Burlington, Vermont',
