@@ -234,7 +234,7 @@ class WingRequest(Resource):
         print()
 
         cursor = connect_info.conn_handle.cursor()
-        cursor.execute(query)        
+        cursor.execute(query)
 
 
 
@@ -283,7 +283,7 @@ class Exercises(Resource):
 
     #Get exercises from the exercise table
     def get(self):
-        query = "select * from aircraft_annual_reference"
+        query = "select * from exercises"
         query += ';'
         print(query)
 
