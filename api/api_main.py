@@ -234,7 +234,7 @@ class WingRequest(Resource):
         print()
 
         cursor = connect_info.conn_handle.cursor()
-        cursor.execute(query)
+        cursor.execute(query)        
 
 
 
