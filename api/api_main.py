@@ -6,6 +6,7 @@ from flask import Flask, jsonify, make_response
 from flask_restful import Resource, Api, reqparse
 from flask_cors import CORS, cross_origin
 import pandas as pandas
+import json
 #import ast
 import psycopg2
 
@@ -324,32 +325,46 @@ class Exercises(Resource):
         ]
 
         parser = reqparse.RequestParser()
-        for arg in table_columns:
-            parser.add_argument(arg, required=False)
+        #for arg in table_columns:
+        #    parser.add_argument(arg, required=False)
+        parser.add_argument('table',required=True)
 
         args = parser.parse_args()
 
-        #INSERT INTO <table> (<columns>) <values>
-        query = 'INSERT INTO exercises '
-        #columns for sql query
-        arg_cols = str(table_columns).replace('\'', ' ')
-        arg_cols = arg_cols.replace('[','(').replace(']',')')
-        #values for sql query
-        arg_vals = []
-        for key in table_columns:
-            arg_vals.append(args[key])
-
-        arg_vals = str(arg_vals).replace('[','(').replace(']',')')
-        #fix booleans for postgres
-        arg_vals = arg_vals.replace('True','true').replace('False','false')
-        query +=  arg_cols + ' VALUES ' + arg_vals + ';'
-        print()
-        print(query)
-        print()
-
+        #delete existing table entries
+        query = 'DELETE from exercises;'
         cursor = connect_info.conn_handle.cursor()
         cursor.execute(query)
+
+        table = args['table']
+        #rebuild tables
+        #INSERT INTO <table> (<columns>) <values>
+        query = 'INSERT INTO exercises '
+        #convert table from json string to dict
+        table = table.replace('\'','\"')
+        table = json.loads(table)
+
+        #iterate through table rows and insert them
+        for row in table:
+            arg_cols = str(table_columns).replace('\'', ' ')
+            arg_cols = arg_cols.replace('[','(').replace(']',')')
+            #values for sql query
+            arg_vals = []
+            for key in table_columns:
+                arg_vals.append(table[row][key])
+
+            arg_vals = str(arg_vals).replace('[','(').replace(']',')')
+            #fix booleans for postgres
+            arg_vals = arg_vals.replace('True','true').replace('False','false')
+            query +=  arg_cols + ' VALUES ' + arg_vals + ';'
+            print()
+            print(query)
+            print()
+
+            cursor.execute(query)
 #        connect_info.conn_handle.commit()
+
+
 
 #Login to site
 #Required args:
