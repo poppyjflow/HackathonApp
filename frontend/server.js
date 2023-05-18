@@ -4,17 +4,16 @@ const express = require("express");
 const port = 3000;
 const app = express();
 const bcrypt = require("bcrypt");
-const saltRounds = 10;
 
-app.get("/hashpassword/:password", (req, res) => {
-  const password = req.params.password;
+app.post("/hashpassword", (req, res) => {
+  const password = req.body.password;
+  const salt = req.body.password;
+  console.log("received password and salt: " + password + ", " + salt);
   bcrypt
-    .genSalt(saltRounds)
-    .then((salt) => {
-      bcrypt.hash(password, salt).then((hash) => {
-        console.log("Sending hash: " + hash);
-        res.send({ Password: hash });
-      });
+    .hash(password, salt)
+    .then((hash) => {
+      console.log("Sending hash: " + hash);
+      res.send({ Password: hash });
     })
     .catch((err) => {
       console.error(err.message);
