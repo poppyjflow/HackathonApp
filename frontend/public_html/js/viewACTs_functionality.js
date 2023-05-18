@@ -2,22 +2,22 @@ const mainAircraftList = [];
 
 const columnDefs = [
   { field: "airframe", editable: true },
-  { field: "1acft", editable: true },
-  { field: "2acft", editable: true },
-  { field: "3acft", editable: true },
-  { field: "4acft", editable: true },
-  { field: "5acft", editable: true },
-  { field: "6acft", editable: true },
-  { field: "7acft", editable: true },
-  { field: "8acft", editable: true },
-  { field: "9acft", editable: true },
-  { field: "10acft", editable: true },
-  { field: "11acft", editable: true },
-  { field: "12acft", editable: true },
-  { field: "13acft", editable: true },
-  { field: "14acft", editable: true },
-  { field: "15acft", editable: true },
-  { field: "16acft", editable: true },
+  { field: "acft", editable: true },
+  { field: "acft", editable: true },
+  { field: "acft", editable: true },
+  { field: "acft", editable: true },
+  { field: "acft", editable: true },
+  { field: "acft", editable: true },
+  { field: "acft", editable: true },
+  { field: "acft", editable: true },
+  { field: "acft", editable: true },
+  { field: "acft", editable: true },
+  { field: "acft", editable: true },
+  { field: "acft", editable: true },
+  { field: "acft", editable: true },
+  { field: "acft", editable: true },
+  { field: "acft", editable: true },
+  { field: "acft", editable: true },
 ];
 
 // specify the data
@@ -89,7 +89,7 @@ function retrieveData() {
   // TODO: When user presses Add row, need to create blank new exercise object
   // in mainAircraftList
   console.log("Final list: " + JSON.stringify(mainAircraftList));
-
+  
   /* Once final list has passed all value checks, send it back to backend to update
   // the database
   fetch("http://127.0.0.1:5000/SOME_AIRCRAFT_ENDPOINT", {
@@ -126,16 +126,6 @@ function logout() {
 function rowAdd() {
   console.log("something is happening");
   gridOptions.api.applyTransaction({ add: [{}] });
-  
-}
-
-function colAdd(){
-  console.log("something is happening");
-  const newColDef = columnDefs;
-  numCol += 1;
-  let newField = numCol.toString() + "(# of personnel needed)";
-  newColDef.push({field: newField, editable: true});
-  gridOptions.api.setColumnDefs(newColDef);
 }
 
 /*function testJson() {

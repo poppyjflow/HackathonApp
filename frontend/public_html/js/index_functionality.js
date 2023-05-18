@@ -115,6 +115,7 @@ function switchToCreateScreen() {
  * home.html
  */
 async function login() {
+  window.location.href = "http://localhost:3000/home.html";
   var username = document.getElementById("UserText");
   var password = document.getElementById("PasswordText");
   if (username.value === "" || password.value === "") {
