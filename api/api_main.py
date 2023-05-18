@@ -339,13 +339,14 @@ class Exercises(Resource):
         table = args['table']
         #rebuild tables
         #INSERT INTO <table> (<columns>) <values>
-        query = 'INSERT INTO exercises '
+        
         #convert table from json string to dict
         table = table.replace('\'','\"')
         table = json.loads(table)
 
         #iterate through table rows and insert them
         for row in table:
+            query = 'INSERT INTO exercises '
             arg_cols = str(table_columns).replace('\'', ' ')
             arg_cols = arg_cols.replace('[','(').replace(']',')')
             #values for sql query
