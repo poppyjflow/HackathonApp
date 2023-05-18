@@ -23,7 +23,6 @@ function registerHandlers() {
   document
     .getElementById("CreateAccountButton")
     .addEventListener("click", createAccount);
-
   // Whenever Admin toggle button is pressed, change isAdmin value
   document.getElementById("adminToggle").addEventListener("click", () => {
     isAdmin = !isAdmin;
