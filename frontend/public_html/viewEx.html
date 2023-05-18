@@ -18,27 +18,11 @@
       <button class="headerButton" id="LogoutButton">Log Out</button>
     </div>
     <div id="content">
+      <div id="myGrid" class="ag-theme-alpine"></div>
       <div>
-        <label for="cars">Choose a table to edit:</label>
-        <select name="cars" id="tableDropdown">
-          <option value="volvo">Exercise 1</option>
-          <option value="saab">Exercise 2</option>
-          <option value="mercedes">Exercise 3</option>
-        </select>
+        <button id="addRow" class="generalButton">Add Exercise</button>
+        <button id="saveButton" class="generalButton">Save Changes</button>
       </div>
-      <div class="orContainer">
-        <div class="surroundingLine"></div>
-        <h3>OR</h3>
-        <div class="surroundingLine"></div>
-      </div>
-      <button id="createTableButton">Create New Table</button>
-      <button id="addRow">Add row</button>
-      <button id="saveButton">Save</button>
-      <div
-        id="myGrid"
-        style="height: 300px; width: 500px"
-        class="ag-theme-alpine"
-      ></div>
     </div>
   </body>
 </html>

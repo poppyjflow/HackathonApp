@@ -8,25 +8,14 @@ body {
 }
 
 #myGrid {
-  margin: auto;
-  width: 50%;
-  border: 3px solid green;
-  padding: 10px;
-}
-#backButton {
-  float: left;
-}
-#saveButton {
-  float: right;
-}
-
-html,
-body {
+  height: 400px;
+  width: 700px;
   margin: 0;
+  margin-bottom: 20px;
+  margin-top: 20px;
   padding: 0;
-  width: 100%;
-  height: 100%;
-  font-family: "Courier New", Courier, monospace;
+  border: 2px solid #42858c;
+  border-radius: 5px;
 }
 
 h3 {
@@ -45,51 +34,29 @@ h3 {
   background-color: #42858c;
 }
 
-.orContainer {
-  height: 60px;
-  width: 200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+#addRow {
+  margin-right: 40px;
 }
 
-label {
-  font-size: 28px;
-  font-family: "Courier New", Courier, monospace;
-  color: white;
-  font-weight: bold;
-}
-
-select {
-  font-size: 26px;
-  font-family: "Courier New", Courier, monospace;
-}
-
-#createTableButton {
+.generalButton {
   background-color: #35393c;
   color: white;
   padding-left: 20px;
   padding-right: 20px;
-  height: 60px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   border: 2px solid #42858c;
   border-radius: 5px;
   font-size: 20px;
   font-family: "Courier New", Courier, monospace;
   font-weight: bold;
-  right: 20px;
   box-shadow: #35393c 5px 5px 15px 5px;
 }
 
-#createTableButton:hover {
+.generalButton:hover {
   cursor: pointer;
 }
 
-.surroundingLine {
-  display: inline;
-  border: 1px solid #35393c;
-  height: 0px;
-  width: 100%;
-}
 #homeButton {
   left: 20px;
   background: url("../images/home_logo.png");
