@@ -201,6 +201,7 @@ class WingRequest(Resource):
         
         cursor = connect_info.conn_handle.cursor()
         cursor.execute(query)
+        connect_info.conn_handle.commit()
         
 
 
@@ -283,6 +284,7 @@ class Exercises(Resource):
 
         cursor = connect_info.conn_handle.cursor()
         cursor.execute(query)
+        cursor.close()
 
 #Login to site
 #Required args:
