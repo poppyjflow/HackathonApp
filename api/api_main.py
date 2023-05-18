@@ -107,7 +107,7 @@ class AircraftRef(Resource):
             rd['year'] = row[1]
             #cost for each number of aircraft
             for num_workers in range(3,len(row)):
-                rd['acft'+str(num_workers)] = row[num_workers]
+                rd['acft'+str(num_workers-2)] = row[num_workers]
             msg_dict[str(nrow)] = rd
             nrow += 1
         msg_dict['rows'] = str(nrow)
@@ -133,7 +133,7 @@ class AircraftRef(Resource):
         args = parser.parse_args()
 
         #delete existing table entries
-        query = 'DELETE from aircraft_reference;'
+        query = 'DELETE from aircraft_annual_reference;'
         cursor = connect_info.conn_handle.cursor()
         cursor.execute(query)
 
@@ -147,7 +147,7 @@ class AircraftRef(Resource):
 
         #iterate through table rows and insert them
         for row in table:
-            query = 'INSERT INTO aircraft_reference '
+            query = 'INSERT INTO aircraft_annual_reference '
             arg_cols = str(table_columns).replace('\'', ' ')
             arg_cols = arg_cols.replace('[','(').replace(']',')')
             #values for sql query
@@ -396,10 +396,72 @@ class Exercises(Resource):
 #TODO: return username+rank
 
 class AirfareCosts(Resource):
-    pass
+    
+    #returns cheapest flight matching the query
+    def get(self):
+
+        parser = reqparse.RequestParser()
+
+        parser.add_argument("to_date", required=True)
+        parser.add_argument("from_date", required=True)
+        parser.add_argument("src_country", required=True)
+        parser.add_argument("src_city", required=True)
+        parser.add_argument("dst_country", required=True)
+        parser.add_argument("dst_city", required=True)
+
+
+        args = parser.parse_args()
+        
+        table_columns = ['airline', 'to_date', 'from_date', 'src_country', 'src_city', 'src_price', 'dst_country', 'dst_city', 'dst_price']
+
+        query = 'SELECT * from airfare_costs WHERE '
+        nargs = len(args.keys())
+        argnum = 0
+        for key in args:
+            
+            query += key + ' = \'' + args[key] +'\''
+            
+            argnum +=1
+            if argnum < nargs:
+                query += ' AND '
+
+        query += ';'
+
+        cursor = connect_info.conn_handle.cursor()
+        cursor.execute(query)
+        data = cursor.fetchall()
+
+        nrow = 0
+        msg_dict = {}
+
+        for row in data:
+            rd = {}
+            for num in range(1,len(table_columns)+1):
+                rd[table_columns[num-1]] = row[num]
+            msg_dict[str(nrow)] = rd
+            nrow += 1
+        #msg_dict['rows'] = nrow
+
+        #[print(row) for row in msg_dict]
+
+        msgkeys = list(msg_dict.keys())
+        bestflight = msg_dict[msgkeys[0]]
+        for key in msgkeys:
+            if msg_dict[key]['src_price'] + msg_dict[key]['dst_price'] < bestflight['src_price'] + bestflight['dst_price']:
+                bestflight = msg_dict[key]
+
+        return addCors(jsonify(bestflight))
+
 
 class LodgingCosts(Resource):
-    pass
+    
+    def get(self):
+        pass
+
+
+
+
+
 class Login(Resource):
 
     #Attempt to login
