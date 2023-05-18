@@ -107,7 +107,7 @@ class AircraftRef(Resource):
             rd['year'] = row[1]
             #cost for each number of aircraft
             for num_workers in range(3,len(row)):
-                rd[str(num_workers)+'acft'] = row[num_workers]
+                rd['acft'+str(num_workers)] = row[num_workers]
             msg_dict[str(nrow)] = rd
             nrow += 1
         msg_dict['rows'] = str(nrow)
