@@ -140,7 +140,7 @@ class AircraftRef(Resource):
         table = args['table']
         #rebuild tables
         #INSERT INTO <table> (<columns>) <values>
-        
+
         #convert table from json string to dict
         table = table.replace('\'','\"')
         table = json.loads(table)
@@ -182,12 +182,12 @@ class WingRequest(Resource):
     ]
 
         parser = reqparse.RequestParser()
-        parser.add_argument("exercises_id", required=True)
+        parser.add_argument("exercises_id_list", required=True)
 
         args = parser.parse_args()
 
-        query = 'select * from wing_request where exercises_id = '
-        query += args['exercises_id']+';'
+        query = 'select * from wing_request where exercises_id in ('
+        query += args['exercises_id_list']+');'
         cursor = connect_info.conn_handle.cursor()
         cursor.execute(query)
         data = cursor.fetchall()
@@ -197,11 +197,12 @@ class WingRequest(Resource):
         for row in data:
             rd = {}
             for num in range(1,len(table_columns)+1):
-                print(row)
-                print(num)
-                print(table_columns[num-1])
+                # print(row)
+                # print(num)
+                print(table_columns[num-1] + ": ")
+                print(row[num])
                 rd[table_columns[num-1]] = row[num]
-            msg_dict[str(row)] = rd
+            msg_dict[str(nrow)] = rd
             nrow += 1
         msg_dict['rows'] = nrow
 
@@ -234,7 +235,7 @@ class WingRequest(Resource):
         table = args['table']
         #rebuild tables
         #INSERT INTO <table> (<columns>) <values>
-        
+
         #convert table from json string to dict
         table = table.replace('\'','\"')
         table = json.loads(table)
@@ -361,7 +362,7 @@ class Exercises(Resource):
         table = args['table']
         #rebuild tables
         #INSERT INTO <table> (<columns>) <values>
-        
+
         #convert table from json string to dict
         table = table.replace('\'','\"')
         table = json.loads(table)
@@ -451,6 +452,7 @@ class Login(Resource):
         msg.headers['Access-Control-Request-Method']='POST, GET, OPTIONS'
         msg.headers['Access-Control-Request-Headers']="Content-Type"
         return msg
+
 
 
 api.add_resource(Login, "/login")
