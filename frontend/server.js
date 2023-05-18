@@ -8,20 +8,17 @@ const saltRounds = 10;
 
 app.get("/hashpassword/:password", (req, res) => {
   const password = req.params.password;
-  console.log("Retrieved password", password);
   bcrypt
     .genSalt(saltRounds)
     .then((salt) => {
-      console.log("Salt: ", salt);
-    })
-    .then((hash) => {
-      console.log("Hash: ", hash);
-
-      res.send(JSON.stringify(bcrypt.hash(password, hash)));
+      bcrypt.hash(password, salt).then((hash) => {
+        console.log("Sending hash: " + hash);
+        res.send({ Password: hash });
+      });
     })
     .catch((err) => {
       console.error(err.message);
-      res.send(JSON.stringify(err.message));
+      res.send({ Error: err.message });
     });
 });
 

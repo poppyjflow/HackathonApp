@@ -56,21 +56,21 @@ class AircraftRef(Resource):
         #data:
             #data found for each row
     def get(self):
-
-        parser = reqparse.RequestParser()
-        parser.add_argument('airframe', required = False)
+        #print("STARTING")
+        #parser = reqparse.RequestParser()
+        #parser.add_argument('airframe', required = False)
         #parser.add_argument('year', required=False)
         #parser.add_argument('num', required=False)
 
         n_acft_offset = 2 #row containing price is 2 + (n_aircraft)
-        args = parser.parse_args()
-        print(args)
+        #args =  parser.parse_args()
+        #print(args)
 
         query = "select * from aircraft_annual_reference"
-        watoken = ' where ' #where or and, used to chain params
-        if args['airframe'] != None:
-            query += watoken + 'airframe = \''+ args['airframe'] +'\''
-            watoken = ' and '
+        #watoken = ' where ' #where or and, used to chain params
+        #if args['airframe'] != None:
+        #    query += watoken + 'airframe = \''+ args['airframe'] +'\''
+        #    watoken = ' and '
         #if args['fiscal_year'] != None:
         #    query += watoken + 'year = ' + args['year']
         #    watoken = ' and '
@@ -234,7 +234,7 @@ class WingRequest(Resource):
         print()
 
         cursor = connect_info.conn_handle.cursor()
-        cursor.execute(query)
+        cursor.execute(query)        
 
 
 
