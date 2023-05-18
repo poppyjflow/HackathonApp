@@ -41,6 +41,7 @@ class Connection:
             host=self.host,
             port=self.port
         )
+        self.conn_handle.set_session(autocommit=True)
 
 class AircraftRef(Resource):
 
@@ -149,7 +150,7 @@ class AircraftRef(Resource):
 
         cursor = connect_info.conn_handle.cursor()
         cursor.execute(query)
-        connect_info.conn_handle.commit()
+#        connect_info.conn_handle.commit()
 
 
 #Send and get exercise wing requests
@@ -348,9 +349,7 @@ class Exercises(Resource):
 
         cursor = connect_info.conn_handle.cursor()
         cursor.execute(query)
-        
-        cursor.close()
-
+#        connect_info.conn_handle.commit()
 
 #Login to site
 #Required args:

@@ -13,6 +13,7 @@ exports.seed = async function(knex) {
       lname: 'Sanchez',
       email_addy: 'rick@pacaf.mil',
       passwd: '$2b$10$nF4C8D9.L379cvptF3.8Du2QCP0Ccaqv4BFyWQ3GmluQOPTG.2iQK',
+      salt: 'somesalt',
       access_level: 'PACAF',
     },
     {
@@ -22,6 +23,7 @@ exports.seed = async function(knex) {
       lname: 'Smith',
       email_addy: 'morty@wing1.mil',
       passwd: '$2b$10$tQQufazpYLdbUX/T9cBpa.4rQ/O.V31ZkFrRCJ9RIJaY/RVe2igYW',
+      salt: 'somesalt',
       access_level: 'WING',
     },
     {
@@ -31,6 +33,7 @@ exports.seed = async function(knex) {
       lname: 'Allen',
       email_addy: 'glootie@wing2.mil',
       passwd: 'somehash',
+      salt: 'somesalt',
       access_level: 'WING',
     },
   ]);
