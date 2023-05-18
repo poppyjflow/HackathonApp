@@ -30,19 +30,19 @@ function registerHandlers() {
 }
 
 function retrieveData() {
-  // TODO: When user presses Add row, need to create blank new exercise object
-  // in mainExerciseList
-  console.log("Final list: " + JSON.stringify(mainExerciseList));
+  var pushableExercises = { table: {} };
+  for (let i = 0; i < mainExerciseList.length; i++) {
+    pushableExercises.table[`${i}`] = mainExerciseList[i];
+  }
+  console.log("Final list: " + JSON.stringify(pushableExercises));
 
-  // Once final list has passed all value checks, send it back to backend to update
-  // the database
   fetch("http://127.0.0.1:5000/exercises", {
     method: "POST",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ table: mainExerciseList }),
+    body: JSON.stringify(pushableExercises),
   })
     .then((res) => {
       res.json().then((text) => {
@@ -70,7 +70,7 @@ function retrieveData() {
 }
 
 function initializeGrid() {
-  console.log("Initializing grid w: " + JSON.stringify(mainExerciseList));
+  //console.log("Initializing grid w: " + JSON.stringify(mainExerciseList));
   const gridDiv = document.querySelector("#myGrid");
   new agGrid.Grid(gridDiv, gridOptions);
 }
@@ -95,24 +95,6 @@ function buildList() {
     .catch((error) => {
       alert(error.message);
     });
-  let tempList = [];
-  tempList.push({
-    id: "1",
-    exercise_name: "train",
-    start_date: "2023-12-14",
-    end_date: "2023-12-29",
-    location: "Singapore",
-    status: "open",
-  });
-  tempList.push({
-    id: "2",
-    exercise_name: "fly planes",
-    start_date: "2023-08-20",
-    end_date: "2023-09-04",
-    location: "Iran",
-    status: "closed",
-  });
-  console.log("Temp List: " + JSON.stringify(tempList));
 }
 
 function logout() {
