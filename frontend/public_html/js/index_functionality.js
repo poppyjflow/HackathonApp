@@ -116,7 +116,7 @@ function switchToCreateScreen() {
  */
 
 async function login() {
-  window.location.href = "http://127.0.0.1:3000/home.html";
+  //window.location.href = "http://127.0.0.1:3000/home.html";
   var username = document.getElementById("UserText");
   var password = document.getElementById("PasswordText");
   if (username.value === "" || password.value === "") {
@@ -124,9 +124,8 @@ async function login() {
     return;
   }
   var loginBody = {
-    username: username.value,
+    email_addy: username.value,
   };
-  console.log("ABOUT TO SEND REQUEST: " + JSON.stringify(loginBody));
   var userResult = await fetch("http://127.0.0.1:5000/login", {
     method: "POST",
     mode: "cors",
@@ -142,7 +141,7 @@ async function login() {
   });
   console.log("Returned user obj: " + JSON.stringify(text));
 
-  var hashBody = {
+  /*var hashBody = {
     salt: text.salt,
     password: text.passwd,
     username: text.email_addy,
@@ -160,5 +159,5 @@ async function login() {
   var hashText = await hashResult.json().catch((error) => {
     alert(error.message);
   });
-  console.log(hashText);
+  console.log(hashText);*/
 }

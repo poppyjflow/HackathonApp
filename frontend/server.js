@@ -8,7 +8,7 @@ const bcrypt = require("bcrypt");
 app.post("/hashpassword", (req, res) => {
   const password = req.body.password;
   const salt = req.body.password;
-  console.log("received password and salt: " + password + ", " + salt);
+  console.log("Received password and salt: " + password + ", " + salt);
   bcrypt
     .hash(password, salt)
     .then((hash) => {
