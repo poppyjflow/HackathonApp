@@ -84,6 +84,10 @@ function viewReports() {
   window.location.href = "http://127.0.0.1:3000/reports.html";
 }
 
+function viewChart() {
+  window.location.href = "http://127.0.0.1:3000/exercise_charts.html";
+}
+
 function changeStatus() {
   const user = getCookie("username");
   if (canUserAccess(user)) {

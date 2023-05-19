@@ -6,6 +6,7 @@ function main() {
   buildAircraftList();
   buildExerciseList();
   registerHandlers();
+<<<<<<< HEAD
   populateDate();
   buildPerdiemTable();
 }
@@ -47,6 +48,9 @@ function populateDate() {
     today.toLocaleDateString("en-CA");
 
   document.getElementById("unitValue").value = "1";
+=======
+  initBarChart();
+>>>>>>> 845dc14f0fdad983469726bbba763ff076a04b75
 }
 
 function registerHandlers() {
@@ -122,10 +126,58 @@ function buildLocationMenu(location) {
   }
 }
 
+function initBarChart(){
+  // holder data, should calculate cost for each aircraft, and
+  // append the data into our json obj below.
+  const data = [
+    {
+      lable: "Cost per day",
+      value: 100
+    },
+    {
+      lable: "Cost per head",
+      value: 100
+    },
+    {
+      lable: "Manpower cost",
+      value: 100
+    },
+    {
+      lable: "Cost per aircraft",
+      value: 100
+    }
+  ];
+  const options = {
+    container: document.getElementById('myChart'),
+    title: {
+      text: "Cost breakdown for ",
+    },
+    subtitle: {
+      text: 'in U.S. dollars',
+    },
+    data:data,
+    series: [
+      {
+        type: 'column',
+        xKey: 'lable',
+        yKey: 'value',
+      }
+    ]
+  };
+  let chart = agCharts.AgChart.create(options);
+
+}
+
+function updateChart(){
+  let acVal = document.getElementById("acftType")
+  let acName = acVal.options[0]
+}
+
 function generateReport() {
   // TODO: Use this dummy button to test autofilling the fields based on the
   // selected menu choice now that the data is loaded into objects. Check value
   // property of exerciseMenu
+  
   console.log("Gen report clicked");
   console.log(mainAircraftList);
   console.log(mainExerciseList);
