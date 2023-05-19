@@ -5,7 +5,7 @@ function main() {
 
 /*
  <h1>Generate Report</h1>
-      <div class="imgContainer" id="reportContainer">
+      <div class="imgContainer">
         <img
           class="clickableImg"
           id="reportImg"
@@ -17,9 +17,48 @@ function main() {
         </div>
       </div>
 */
+
 function addDynamicImage() {
   console.log(document.cookie);
-  //if user is general, add function to image that redirects to one screen
+  const isAdmin = true;
+  // if user is admin, add Generate Report screen to see stats
+  // if user is general user, add Submit Wing Request instead
+  var header = document.createElement("h1");
+  var container = document.createElement("div");
+  var image = document.createElement("img");
+  var tintOverlay = document.createElement("div");
+  var textOverlay = document.createElement("div");
+  image.classList = "clickableImg";
+  container.classList = "imgContainer";
+  if (isAdmin) {
+    header.innerText = "Generate Report";
+    image.src = "./images/generate_report.jpg";
+    image.id = "reportImg";
+    tintOverlay.classList = "imgOverlay";
+    tintOverlay.id = "reportOverlay";
+    textOverlay.classList = "imgHeader";
+    textOverlay.id = "reportHeader";
+    textOverlay.innerText = "View Costs for Exercises";
+    container.addEventListener("click", viewReports);
+  } else {
+    header.innerText = "Submit Wing Request";
+    image.src = "./images/wing_request.jpg";
+    image.id = "wingRequestImg";
+    // WOULD CHANGE COLOR HERE
+    tintOverlay.classList = "imgOverlay";
+    tintOverlay.id = "reportOverlay";
+    textOverlay.classList = "imgHeader";
+    textOverlay.id = "reportHeader";
+    textOverlay.innerText = "Submit Wing Request";
+    container.addEventListener("click", viewWingRequest);
+  }
+  container.appendChild(image);
+  container.appendChild(tintOverlay);
+  container.appendChild(textOverlay);
+  var contentContainer = document.getElementById("content");
+  contentContainer.appendChild(document.body.appendChild(header));
+  contentContainer.appendChild(document.body.appendChild(container));
+  console.log(document);
 }
 
 function registerHandlers() {
@@ -34,12 +73,19 @@ function registerHandlers() {
 
 function logout() {
   console.log("Logging user out...");
-  document.cookie = "";
   window.location.href = "http://127.0.0.1:3000/index.html";
+}
+
+function viewWingRequest() {
+  window.location.href = "http://127.0.0.1:3000/reports.html";
 }
 
 function viewReports() {
   window.location.href = "http://127.0.0.1:3000/reports.html";
+}
+
+function viewChart() {
+  window.location.href = "http://127.0.0.1:3000/exercise_charts.html";
 }
 
 function changeStatus() {
@@ -65,7 +111,7 @@ function canUserAccess(user) {
   }
 }
 
-function getCookie(cName) {
+/*function getCookie(cName) {
   const name = cName + "=";
   const cDecoded = decodeURIComponent(document.cookie); //to be careful
   const cArr = cDecoded.split("; ");
@@ -74,6 +120,6 @@ function getCookie(cName) {
     if (val.indexOf(name) === 0) res = val.substring(name.length);
   });
   return res;
-}
+}*/
 
 document.addEventListener("DOMContentLoaded", main);

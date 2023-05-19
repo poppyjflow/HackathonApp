@@ -9,6 +9,7 @@ function main() {
   registerHandlers();
   console.log(document.cookie);
 }
+
 /*
  * Adds event listeners to various HMTL elements using helper functions
  */
