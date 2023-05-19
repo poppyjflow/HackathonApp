@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/chart_style.css" />
+    <link rel="icon" href="/images/home_logo.png" />
+    <script src="./js/charts_functionality.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <title>All Reports</title>
+  </head>
+  <body>
+    <div id="header">
+      <a href="http://127.0.0.1:3000/home.html">
+        <img id="logoImg" src="./images/home_logo.png" />
+      </a>
+      <button class="headerButton" id="LogoutButton">Log Out</button>
+    </div>
+    <div id="content">
+      <div id="formContainer">
+        <h1>Create Chart</h1>
+        <form>
+          <div class="inputRow">
+            <label>Exercise Name</label>
+            <select id="exerciseMenu">
+                <option>Ex1</option>
+            </select>
+            
+          </div>
+          <div class="inputRow" id="buttonContainer">
+            <button class="generalButton" id="genChartButton">
+              Generate Chart
+            </button>
+          </div>
+        </form>
+      </div>
+      <div>
+        <canvas id="cpdChart" style="width:100%;max-width:700px"></canvas>
+      </div>
+      <div>
+        <canvas id="cphChart" style="width:100%;max-width:700px"></canvas>
+      </div>
+    </div>
+   
+  </body>
+</html>

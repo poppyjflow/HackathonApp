@@ -9,12 +9,17 @@ function registerHandlers() {
   document
     .getElementById("reportContainer")
     .addEventListener("click", viewReports);
+  document.getElementById("chartButton").addEventListener("click", viewChart);
 }
 
 function logout() {
   console.log("Logging user out...");
   document.cookie = "";
   window.location.href = "http://127.0.0.1:3000/index.html";
+}
+
+function viewChart(){
+  window.location.href = "http://127.0.0.1:3000/exercise_charts.html";
 }
 
 function viewReports() {

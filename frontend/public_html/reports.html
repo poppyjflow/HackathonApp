@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="./css/report_style.css" />
     <link rel="icon" href="/images/home_logo.png" />
     <script src="./js/viewReports_functionality.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ag-charts-community@7.3.0/dist/ag-charts-community.min.js"></script>
     <title>All Reports</title>
   </head>
   <body>
@@ -52,7 +53,7 @@
           </div>
           <div class="inputRow">
             <label>Aircraft Type</label>
-            <select>
+            <select id="acftType">
               <option>Aircraft 1</option>
               <option>Aircraft 2</option>
             </select>
@@ -86,6 +87,10 @@
           </div>
         </form>
       </div>
+      <div>
+        <div id="myChart"></div>
+      </div>
     </div>
+   
   </body>
 </html>
