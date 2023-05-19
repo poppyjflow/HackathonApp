@@ -64,6 +64,9 @@ function registerHandlers() {
   document
     .getElementById("aircraftinput")
     .addEventListener("change", autofillAirfields);
+  document.getElementById("reportForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+  });
 }
 
 function autofillAirfields() {
@@ -220,13 +223,8 @@ function updateChart() {
 }
 
 function generateReport() {
-  // TODO: Use this dummy button to test autofilling the fields based on the
-  // selected menu choice now that the data is loaded into objects. Check value
-  // property of exerciseMenu
-
-  console.log("Gen report clicked");
-  console.log(mainAircraftList);
-  console.log(mainExerciseList);
+  alert("Request successfully submitted");
+  window.location.href = "http://127.0.0.1:3000/home.html";
 }
 
 function buildExerciseMenu() {

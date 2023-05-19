@@ -107,9 +107,9 @@ h1 {
   background: url("../images/home_logo.png");
 }
 
-canvas{
+canvas {
   margin: 0 auto;
-  }
+}
 
 #cpdChart {
   width: 400px;
@@ -120,7 +120,7 @@ canvas{
   padding: 100px;
 }
 
-#cphChart{
+#cphChart {
   width: 400px;
   height: 400px;
   overflow-x: hidden;
@@ -128,7 +128,7 @@ canvas{
   text-align: center;
   padding: 100px;
 }
-#manChart{
+#manChart {
   width: 400px;
   height: 400px;
   overflow-x: hidden;
@@ -136,7 +136,7 @@ canvas{
   text-align: center;
   padding: 100px;
 }
-#cpaChart{
+#cpaChart {
   width: 400px;
   height: 400px;
   overflow-x: hidden;
@@ -144,7 +144,7 @@ canvas{
   text-align: center;
   padding: 100px;
 }
-#totalChart{
+#totalChart {
   width: 400px;
   height: 400px;
   overflow-x: hidden;
@@ -196,4 +196,3 @@ canvas{
   padding-bottom: 40px;
   padding-top: 30px;
 }
-

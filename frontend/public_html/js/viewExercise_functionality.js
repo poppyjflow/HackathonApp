@@ -24,12 +24,41 @@ const gridOptions = {
 function main() {
   buildList();
   registerHandlers();
+  addButtons();
   //gridOptions.api.setRowData(mainExerciseList);
 }
 
+/*
+* <div>
+        <button id="addRow" class="generalButton">Add Exercise</button>
+        <button id="saveButton" class="generalButton">Save Changes</button>
+      </div>
+*/
+function addButtons() {
+  var userObj = JSON.parse(document.cookie.split("=")[1]);
+  console.log(userObj);
+  if (userObj.access_level == "PACAF") {
+    var buttonContainer = document.createElement("div");
+    var addRowButton = document.createElement("button");
+    addRowButton.innerText = "Add Exercise";
+    addRowButton.id = "addRow";
+    addRowButton.classList = "generalButton";
+    var saveButton = document.createElement("button");
+    saveButton.innerText = "Save Changes";
+    saveButton.id = "saveButton";
+    saveButton.classList = "generalButton";
+    buttonContainer.appendChild(addRowButton);
+    buttonContainer.appendChild(saveButton);
+    var contentDiv = document.getElementById("content");
+    contentDiv.appendChild(buttonContainer);
+    document.getElementById("addRow").addEventListener("click", rowAdd);
+    document
+      .getElementById("saveButton")
+      .addEventListener("click", retrieveData);
+  }
+}
+
 function registerHandlers() {
-  document.getElementById("addRow").addEventListener("click", rowAdd);
-  document.getElementById("saveButton").addEventListener("click", retrieveData);
   document.getElementById("LogoutButton").addEventListener("click", logout);
 }
 

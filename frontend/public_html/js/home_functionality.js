@@ -55,7 +55,7 @@ function addDynamicImage() {
     tintOverlay.classList = "imgOverlay";
     tintOverlay.id = "reportOverlay";
     textOverlay.classList = "imgHeader";
-    textOverlay.id = "reportHeader";
+    textOverlay.id = "wingHeader";
     textOverlay.innerText = "Submit Wing Request";
     container.addEventListener("click", viewReports);
   }
