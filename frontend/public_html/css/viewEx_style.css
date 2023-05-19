@@ -52,14 +52,15 @@ h3 {
 }
 
 #myGrid {
-  height: 400px;
-  width: 700px;
+  height: 600px;
+  width: 900px;
   margin: 0;
   margin-bottom: 20px;
   margin-top: 20px;
   padding: 0;
   border: 2px solid #42858c;
   border-radius: 5px;
+  box-shadow: #35393c 5px 5px 15px 5px;
 }
 
 #logoImg {
