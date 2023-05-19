@@ -2,12 +2,16 @@ const mainExerciseList = [];
 
 // specify the data
 
+var userObj = JSON.parse(document.cookie.split("=")[1]);
+console.log(userObj);
+const isAdmin = userObj.access_level == "PACAF";
+console.log(isAdmin);
 const columnDefs = [
-  { field: "exercise_name", editable: true },
-  { field: "location", editable: true },
-  { field: "start_date", editable: true },
-  { field: "end_date", editable: true },
-  { field: "status", editable: true },
+  { field: "exercise_name", editable: isAdmin },
+  { field: "location", editable: isAdmin },
+  { field: "start_date", editable: isAdmin },
+  { field: "end_date", editable: isAdmin },
+  { field: "status", editable: isAdmin },
 ];
 
 const gridOptions = {
@@ -97,8 +101,15 @@ function retrieveData() {
   //dropDown.add(newTable);
 }
 
+async function clearCookies() {
+  var res = await fetch(`http://127.0.0.1:3000/clear`).catch((error) => {
+    alert(error.message);
+  });
+}
+
 function logout() {
   console.log("Logging user out...");
+  clearCookies();
   window.location.href = "http://127.0.0.1:3000/index.html";
 }
 

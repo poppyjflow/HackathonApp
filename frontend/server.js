@@ -13,6 +13,13 @@ app.use(cookieParser());
 //Morty: pass2: 1ba3d16e9881959f8c9a9762854f72c6e6321cdd44358a10a4e939033117eab9
 //Glootie and others: pass3: 3acb59306ef6e660cf832d1d34c4fba3d88d616f0bb5c2a9e0f82d18ef6fc167
 
+app.get("/clear", (req, res) => {
+  res.clearCookie("username");
+  res.clearCookie("access");
+  res.clearCookie("user");
+  res.send(JSON.stringify({ Response: "Successful" }));
+});
+
 app.post("/hashpassword", (req, res) => {
   const hashedPass = req.body.hashedPassword;
   const password = req.body.password;
