@@ -84,30 +84,6 @@ async function buildList() {
   }
   initializeGrid();
   console.log(text);
-
-  /*mainAircraftList.push({
-    id: "1",
-    fiscal_year: "2023",
-    airframe: "F-22",
-    "1acft": "50",
-    "2acft": "25",
-    "3acft": "20",
-    "4acft": "N/A",
-    "5acft": "1",
-    "6acft": "N/A",
-  });
-  mainAircraftList.push({
-    id: "2",
-    fiscal_year: "2023",
-    airframe: "C-5",
-    "1acft": "5",
-    "2acft": "25",
-    "3acft": "10",
-    "4acft": "50",
-    "5acft": "N/A",
-    "6acft": "N/A",
-    "16acft": "100",
-  });*/
 }
 
 function registerHandlers() {
@@ -135,13 +111,6 @@ function retrieveData() {
     .catch((error) => {
       alert(error.message);
     });
-
-  /*var nodes = [];
-  gridOptions.api.forEachNode((rowNode, index) => {
-    console.log("node " + JSON.stringify(rowNode.data) + " is in the grid");
-    nodes.push(JSON.stringify(rowNode.data));
-    // do something with this data. Need to send it back to db.
-  });*/
 }
 
 async function clearCookies() {
@@ -185,36 +154,5 @@ function rowAdd() {
   });
   wipeoutGrid();
 }
-
-/*function testJson() {
-  //This function uses made up data and populates the table
-  let myjsonobj = [
-    {
-      id: "2",
-      fiscal_year: "2023",
-      airframe: "F-22",
-      "1acft": "50",
-      "2acft": "25",
-      "3acft": "20",
-      "4acft": "N/A",
-      "5acft": "1",
-      "6acft": "N/A",
-    },
-    {
-      id: "2",
-      fiscal_year: "2023",
-      airframe: "C-5",
-      "1acft": "5",
-      "2acft": "25",
-      "3acft": "10",
-      "4acft": "50",
-      "5acft": "N/A",
-      "6acft": "N/A",
-      "16acft": "100",
-    },
-  ];
-  console.log(myjsonobj);
-  gridOptions.api.setRowData(myjsonobj);
-}*/
 
 document.addEventListener("DOMContentLoaded", main);

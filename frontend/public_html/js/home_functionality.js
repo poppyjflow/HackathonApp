@@ -9,21 +9,6 @@ async function clearCookies() {
   });
 }
 
-/*
- <h1>Generate Report</h1>
-      <div class="imgContainer">
-        <img
-          class="clickableImg"
-          id="reportImg"
-          src="./images/generate_report.jpg"
-        />
-        <div class="imgOverlay" id="reportOverlay"></div>
-        <div class="imgHeader" id="reportHeader">
-          Create/View/Modify Reports
-        </div>
-      </div>
-*/
-
 function addDynamicImage() {
   var userObj = JSON.parse(document.cookie.split("=")[1]);
   const isAdmin = userObj.access_level == "PACAF";
