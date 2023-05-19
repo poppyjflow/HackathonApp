@@ -1,12 +1,11 @@
 const mainAircraftList = [];
 const mainExerciseList = [];
 const perdiemTable = {};
-
+var lastlyChosenAircraft;
 function main() {
   buildAircraftList();
   buildExerciseList();
   registerHandlers();
-<<<<<<< HEAD
   populateDate();
   buildPerdiemTable();
 }
@@ -48,9 +47,6 @@ function populateDate() {
     today.toLocaleDateString("en-CA");
 
   document.getElementById("unitValue").value = "1";
-=======
-  initBarChart();
->>>>>>> 845dc14f0fdad983469726bbba763ff076a04b75
 }
 
 function registerHandlers() {
@@ -63,11 +59,35 @@ function registerHandlers() {
     .addEventListener("change", autofillLocation);
   document
     .getElementById("aircraftMenu")
+    .addEventListener("change", updateLastlyChosen);
+
+  document
+    .getElementById("aircraftinput")
     .addEventListener("change", autofillAirfields);
 }
 
 function autofillAirfields() {
-  console.log(mainAircraftList);
+  if (lastlyChosenAircraft != null) {
+    console.log("Should autofill: " + JSON.stringify(lastlyChosenAircraft));
+  }
+  var aircraftCount = document.getElementById("aircraftinput").value;
+  aircraftCount = "acft" + aircraftCount;
+  var personnelNum = lastlyChosenAircraft[`${aircraftCount}`];
+  console.log(personnelNum);
+  document.getElementById("personnelinput").value = personnelNum;
+}
+
+function updateLastlyChosen() {
+  var aircraftDropdown = document.getElementById("aircraftMenu");
+  var dropdownText =
+    aircraftDropdown.options[aircraftDropdown.selectedIndex].text;
+  for (const key of mainAircraftList) {
+    var name = key.airframe;
+    if (name.toLowerCase() === dropdownText.toLowerCase()) {
+      lastlyChosenAircraft = key;
+    }
+  }
+  autofillAirfields();
 }
 
 function autofillLocation() {
@@ -99,6 +119,13 @@ function buildAircraftMenu() {
     aircraftMenu.appendChild(menuItem);
     index++;
   }
+  for (const key of mainAircraftList) {
+    var name = key.airframe;
+    if (name.toLowerCase() === frameList[0].toLowerCase()) {
+      lastlyChosenAircraft = key;
+    }
+  }
+  autofillAirfields();
 }
 
 function buildLocationMenu(location) {
@@ -126,58 +153,57 @@ function buildLocationMenu(location) {
   }
 }
 
-function initBarChart(){
+function initBarChart() {
   // holder data, should calculate cost for each aircraft, and
   // append the data into our json obj below.
   const data = [
     {
       lable: "Cost per day",
-      value: 100
+      value: 100,
     },
     {
       lable: "Cost per head",
-      value: 100
+      value: 100,
     },
     {
       lable: "Manpower cost",
-      value: 100
+      value: 100,
     },
     {
       lable: "Cost per aircraft",
-      value: 100
-    }
+      value: 100,
+    },
   ];
   const options = {
-    container: document.getElementById('myChart'),
+    container: document.getElementById("myChart"),
     title: {
       text: "Cost breakdown for ",
     },
     subtitle: {
-      text: 'in U.S. dollars',
+      text: "in U.S. dollars",
     },
-    data:data,
+    data: data,
     series: [
       {
-        type: 'column',
-        xKey: 'lable',
-        yKey: 'value',
-      }
-    ]
+        type: "column",
+        xKey: "lable",
+        yKey: "value",
+      },
+    ],
   };
   let chart = agCharts.AgChart.create(options);
-
 }
 
-function updateChart(){
-  let acVal = document.getElementById("acftType")
-  let acName = acVal.options[0]
+function updateChart() {
+  let acVal = document.getElementById("acftType");
+  let acName = acVal.options[0];
 }
 
 function generateReport() {
   // TODO: Use this dummy button to test autofilling the fields based on the
   // selected menu choice now that the data is loaded into objects. Check value
   // property of exerciseMenu
-  
+
   console.log("Gen report clicked");
   console.log(mainAircraftList);
   console.log(mainExerciseList);
