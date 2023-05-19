@@ -26,8 +26,8 @@ async function clearCookies() {
 
 function addDynamicImage() {
   var userObj = JSON.parse(document.cookie.split("=")[1]);
-  console.log(userObj);
   const isAdmin = userObj.access_level == "PACAF";
+  console.log(isAdmin);
   // if user is admin, add Generate Report screen to see stats
   // if user is general user, add Submit Wing Request instead
   var header = document.createElement("h1");
@@ -46,7 +46,7 @@ function addDynamicImage() {
     textOverlay.classList = "imgHeader";
     textOverlay.id = "reportHeader";
     textOverlay.innerText = "View Costs for Exercises";
-    container.addEventListener("click", viewReports);
+    container.addEventListener("click", viewChart);
   } else {
     header.innerText = "Submit Wing Request";
     image.src = "./images/wing_request.jpg";
@@ -57,7 +57,7 @@ function addDynamicImage() {
     textOverlay.classList = "imgHeader";
     textOverlay.id = "reportHeader";
     textOverlay.innerText = "Submit Wing Request";
-    container.addEventListener("click", viewWingRequest);
+    container.addEventListener("click", viewReports);
   }
   container.appendChild(image);
   container.appendChild(tintOverlay);
@@ -75,7 +75,6 @@ function registerHandlers() {
   document
     .getElementById("aircraftContainer")
     .addEventListener("click", viewACT);
-  document.getElementById("chartsButton").addEventListener("click", viewChart);
 }
 
 function logout() {
@@ -84,15 +83,13 @@ function logout() {
   window.location.href = "http://127.0.0.1:3000/index.html";
 }
 
-function viewWingRequest() {
-  window.location.href = "http://127.0.0.1:3000/reports.html";
-}
-
 function viewReports() {
+  console.log("View reports");
   window.location.href = "http://127.0.0.1:3000/reports.html";
 }
 
 function viewChart() {
+  console.log("View charts");
   window.location.href = "http://127.0.0.1:3000/exercise_charts.html";
 }
 

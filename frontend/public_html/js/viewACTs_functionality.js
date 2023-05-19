@@ -1,25 +1,27 @@
 const mainAircraftList = [];
+var userObj = JSON.parse(document.cookie.split("=")[1]);
+console.log(userObj);
+const isAdmin = userObj.access_level == "PACAF";
 
 const columnDefs = [
-  { field: "airframe", editable: true },
-  { field: "acft1", editable: true },
-  { field: "acft2", editable: true },
-  { field: "acft3", editable: true },
-  { field: "acft4", editable: true },
-  { field: "acft5", editable: true },
-  { field: "acft6", editable: true },
-  { field: "acft7", editable: true },
-  { field: "acft8", editable: true },
-  { field: "acft9", editable: true },
-  { field: "acft10", editable: true },
-  { field: "acft11", editable: true },
-  { field: "acft12", editable: true },
-  { field: "acft13", editable: true },
-  { field: "acft14", editable: true },
-  { field: "acft15", editable: true },
-  { field: "acft16", editable: true },
+  { field: "airframe", editable: isAdmin },
+  { field: "acft1", editable: isAdmin },
+  { field: "acft2", editable: isAdmin },
+  { field: "acft3", editable: isAdmin },
+  { field: "acft4", editable: isAdmin },
+  { field: "acft5", editable: isAdmin },
+  { field: "acft6", editable: isAdmin },
+  { field: "acft7", editable: isAdmin },
+  { field: "acft8", editable: isAdmin },
+  { field: "acft9", editable: isAdmin },
+  { field: "acft10", editable: isAdmin },
+  { field: "acft11", editable: isAdmin },
+  { field: "acft12", editable: isAdmin },
+  { field: "acft13", editable: isAdmin },
+  { field: "acft14", editable: isAdmin },
+  { field: "acft15", editable: isAdmin },
+  { field: "acft16", editable: isAdmin },
 ];
-
 // specify the data
 
 // let the grid know which columns and what data to use
