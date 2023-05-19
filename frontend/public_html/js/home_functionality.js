@@ -30,6 +30,7 @@ function registerHandlers() {
   document
     .getElementById("aircraftContainer")
     .addEventListener("click", viewACT);
+  document.getElementById("chartsButton").addEventListener("click", viewChart);
 }
 
 function logout() {
