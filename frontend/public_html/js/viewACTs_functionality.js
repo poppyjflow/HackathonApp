@@ -122,7 +122,6 @@ function retrieveData() {
 
 function logout() {
   console.log("Logging user out...");
-  document.cookie = "";
   window.location.href = "http://127.0.0.1:3000/index.html";
 }
 
