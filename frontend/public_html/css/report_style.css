@@ -39,6 +39,10 @@ h3 {
   width: 75px;
 }
 
+#mealsProvided {
+  width: 75px;
+}
+
 .generalButton {
   background-color: #35393c;
   color: white;

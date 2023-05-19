@@ -7,7 +7,8 @@ document.addEventListener("DOMContentLoaded", main);
 
 function main() {
   registerHandlers();
-  console.log(document.cookie);
+  document.cookie = "";
+  console.log("Cookie in main: " + document.cookie);
 }
 
 /*
@@ -164,7 +165,7 @@ async function login() {
   });
   if (hashText.Matched) {
     console.log(text);
-    document.cookie = "user=" + text + ";";
+    document.cookie = "user=" + JSON.stringify(text) + ";";
     window.location.href = "http://127.0.0.1:3000/home.html";
   } else {
     alert("Invalid Password");

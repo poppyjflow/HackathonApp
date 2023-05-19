@@ -57,6 +57,10 @@
             </select>
           </div>
           <div class="inputRow">
+            <label># of Days</label>
+            <input id="dayNumber" type="number" />
+          </div>
+          <div class="inputRow">
             <label># of Aircraft</label>
             <input id="aircraftinput" type="number" />
           </div>
@@ -67,10 +71,23 @@
           <div class="inputRow">
             <label>Lodging</label>
             <select>
-              <option>Aircraft 1</option>
-              <option>Aircraft 2</option>
+              <option>Government Lodging</option>
+              <option>Commercial Hotel</option>
+              <option>Field Conditions</option>
             </select>
           </div>
+          <div class="inputRow">
+            <label>Per Diem</label>
+            <input type="number" />
+          </div>
+          <div class="inputRow">
+            <label>Meals Provided</label>
+            <select id="mealsProvided">
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+        </div>
           <div class="inputRow" id="buttonContainer">
             <button class="generalButton" id="genReportButton">
               Generate Report

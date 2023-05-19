@@ -120,8 +120,15 @@ function retrieveData() {
   });*/
 }
 
+async function clearCookies() {
+  var res = await fetch(`http://127.0.0.1:3000/clear`).catch((error) => {
+    alert(error.message);
+  });
+}
+
 function logout() {
   console.log("Logging user out...");
+  clearCookies();
   window.location.href = "http://127.0.0.1:3000/index.html";
 }
 

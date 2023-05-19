@@ -67,14 +67,12 @@ function registerHandlers() {
 }
 
 function autofillAirfields() {
-  if (lastlyChosenAircraft != null) {
-    console.log("Should autofill: " + JSON.stringify(lastlyChosenAircraft));
-  }
   var aircraftCount = document.getElementById("aircraftinput").value;
   aircraftCount = "acft" + aircraftCount;
   var personnelNum = lastlyChosenAircraft[`${aircraftCount}`];
-  console.log(personnelNum);
-  document.getElementById("personnelinput").value = personnelNum;
+  if (personnelNum != undefined) {
+    document.getElementById("personnelinput").value = personnelNum;
+  }
 }
 
 function updateLastlyChosen() {
@@ -97,9 +95,18 @@ function autofillLocation() {
   for (const key of mainExerciseList) {
     var name = key.exercise_name;
     if (name.toLowerCase() === dropdownText.toLowerCase()) {
+      updateNumDaysField(key);
       buildLocationMenu(key.location);
     }
   }
+}
+
+function updateNumDaysField(key) {
+  var endDate = new Date(key.end_date);
+  var startDate = new Date(key.start_date);
+  const oneDay = 24 * 60 * 60 * 1000;
+  var numDays = (endDate - startDate) / oneDay;
+  document.getElementById("dayNumber").value = numDays;
 }
 
 function buildAircraftMenu() {
@@ -128,15 +135,28 @@ function buildAircraftMenu() {
   autofillAirfields();
 }
 
+function manuallyFillList(list) {
+  list.push("Melbourne");
+  list.push("Sydney");
+  list.push("Adelaide");
+  list.push("Richmond");
+}
+
 function buildLocationMenu(location) {
+  location = location.toUpperCase();
   var locationList = [];
-  if (location.length != 0 && perdiemTable.location != undefined) {
-    locationList = perdiemTable.location;
+  if (location.length != 0) {
+    if (perdiemTable[`${location}`] != undefined) {
+      if (perdiemTable[`${location}`].length > 0) {
+        locationList = perdiemTable[`${location}`];
+      } else {
+        manuallyFillList(locationList);
+      }
+    } else {
+      manuallyFillList(locationList);
+    }
   } else {
-    locationList.push("YEMEN");
-    locationList.push("GUATEMALA");
-    locationList.push("PORTUGAL");
-    locationList.push("ZAMBIA");
+    manuallyFillList(locationList);
   }
   // Clear previous nodes
   var exerciseMenu = document.getElementById("locationMenu");
@@ -265,8 +285,15 @@ function buildAircraftList() {
     });
 }
 
+async function clearCookies() {
+  var res = await fetch(`http://127.0.0.1:3000/clear`).catch((error) => {
+    alert(error.message);
+  });
+}
+
 function logout() {
   console.log("Logging user out...");
+  clearCookies();
   window.location.href = "http://127.0.0.1:3000/index.html";
 }
 
