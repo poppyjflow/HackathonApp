@@ -2,12 +2,16 @@ const mainExerciseList = [];
 
 // specify the data
 
+var userObj = JSON.parse(document.cookie.split("=")[1]);
+console.log(userObj);
+const isAdmin = userObj.access_level == "PACAF";
+console.log(isAdmin);
 const columnDefs = [
-  { field: "exercise_name", editable: true },
-  { field: "location", editable: true },
-  { field: "start_date", editable: true },
-  { field: "end_date", editable: true },
-  { field: "status", editable: true },
+  { field: "exercise_name", editable: isAdmin },
+  { field: "location", editable: isAdmin },
+  { field: "start_date", editable: isAdmin },
+  { field: "end_date", editable: isAdmin },
+  { field: "status", editable: isAdmin },
 ];
 
 const gridOptions = {
@@ -20,12 +24,41 @@ const gridOptions = {
 function main() {
   buildList();
   registerHandlers();
+  addButtons();
   //gridOptions.api.setRowData(mainExerciseList);
 }
 
+/*
+* <div>
+        <button id="addRow" class="generalButton">Add Exercise</button>
+        <button id="saveButton" class="generalButton">Save Changes</button>
+      </div>
+*/
+function addButtons() {
+  var userObj = JSON.parse(document.cookie.split("=")[1]);
+  console.log(userObj);
+  if (userObj.access_level == "PACAF") {
+    var buttonContainer = document.createElement("div");
+    var addRowButton = document.createElement("button");
+    addRowButton.innerText = "Add Exercise";
+    addRowButton.id = "addRow";
+    addRowButton.classList = "generalButton";
+    var saveButton = document.createElement("button");
+    saveButton.innerText = "Save Changes";
+    saveButton.id = "saveButton";
+    saveButton.classList = "generalButton";
+    buttonContainer.appendChild(addRowButton);
+    buttonContainer.appendChild(saveButton);
+    var contentDiv = document.getElementById("content");
+    contentDiv.appendChild(buttonContainer);
+    document.getElementById("addRow").addEventListener("click", rowAdd);
+    document
+      .getElementById("saveButton")
+      .addEventListener("click", retrieveData);
+  }
+}
+
 function registerHandlers() {
-  document.getElementById("addRow").addEventListener("click", rowAdd);
-  document.getElementById("saveButton").addEventListener("click", retrieveData);
   document.getElementById("LogoutButton").addEventListener("click", logout);
 }
 
@@ -97,8 +130,15 @@ function retrieveData() {
   //dropDown.add(newTable);
 }
 
+async function clearCookies() {
+  var res = await fetch(`http://127.0.0.1:3000/clear`).catch((error) => {
+    alert(error.message);
+  });
+}
+
 function logout() {
   console.log("Logging user out...");
+  clearCookies();
   window.location.href = "http://127.0.0.1:3000/index.html";
 }
 

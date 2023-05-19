@@ -20,28 +20,36 @@
     <div id="content">
       <div id="formContainer">
         <h1>Create Chart</h1>
-        <form>
+        <form id="chartForm">
           <div class="inputRow">
             <label>Exercise Name</label>
             <select id="exerciseMenu">
-                <option>Ex1</option>
+              <option value="ex1">PACIFIC SQUANCH</option>
+              <option value="ex2">CROMULON SCHWIFTY</option>
             </select>
-            
           </div>
           <div class="inputRow" id="buttonContainer">
-            <button class="generalButton" id="genChartButton">
+            <button class="generalButton" id="generateButton">
               Generate Chart
             </button>
           </div>
         </form>
-      </div>
-      <div>
-        <canvas id="cpdChart" style="width:100%;max-width:700px"></canvas>
-      </div>
-      <div>
-        <canvas id="cphChart" style="width:100%;max-width:700px"></canvas>
+        <div>
+          <canvas id="cpdChart"></canvas>
+        </div>
+        <div>
+          <canvas id="cphChart"></canvas>
+        </div>
+        <div>
+          <canvas id="manChart"></canvas>
+        </div>
+        <div>
+          <canvas id="cpaChart"></canvas>
+        </div>
+        <div>
+          <canvas id="totalChart"></canvas>
+        </div>
       </div>
     </div>
-   
   </body>
 </html>

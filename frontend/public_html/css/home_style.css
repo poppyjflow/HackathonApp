@@ -56,6 +56,9 @@ h1 {
   border: 2px solid black;
 }
 
+#wingHeader {
+  left: 20%;
+}
 
 #reportHeader {
   left: 10%;

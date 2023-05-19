@@ -3,6 +3,12 @@ function main() {
   registerHandlers();
 }
 
+async function clearCookies() {
+  var res = await fetch(`http://127.0.0.1:3000/clear`).catch((error) => {
+    alert(error.message);
+  });
+}
+
 /*
  <h1>Generate Report</h1>
       <div class="imgContainer">
@@ -19,8 +25,9 @@ function main() {
 */
 
 function addDynamicImage() {
-  console.log(document.cookie);
-  const isAdmin = true;
+  var userObj = JSON.parse(document.cookie.split("=")[1]);
+  const isAdmin = userObj.access_level == "PACAF";
+  console.log(isAdmin);
   // if user is admin, add Generate Report screen to see stats
   // if user is general user, add Submit Wing Request instead
   var header = document.createElement("h1");
@@ -39,7 +46,7 @@ function addDynamicImage() {
     textOverlay.classList = "imgHeader";
     textOverlay.id = "reportHeader";
     textOverlay.innerText = "View Costs for Exercises";
-    container.addEventListener("click", viewReports);
+    container.addEventListener("click", viewChart);
   } else {
     header.innerText = "Submit Wing Request";
     image.src = "./images/wing_request.jpg";
@@ -48,9 +55,9 @@ function addDynamicImage() {
     tintOverlay.classList = "imgOverlay";
     tintOverlay.id = "reportOverlay";
     textOverlay.classList = "imgHeader";
-    textOverlay.id = "reportHeader";
+    textOverlay.id = "wingHeader";
     textOverlay.innerText = "Submit Wing Request";
-    container.addEventListener("click", viewWingRequest);
+    container.addEventListener("click", viewReports);
   }
   container.appendChild(image);
   container.appendChild(tintOverlay);
@@ -58,7 +65,6 @@ function addDynamicImage() {
   var contentContainer = document.getElementById("content");
   contentContainer.appendChild(document.body.appendChild(header));
   contentContainer.appendChild(document.body.appendChild(container));
-  console.log(document);
 }
 
 function registerHandlers() {
@@ -73,18 +79,17 @@ function registerHandlers() {
 
 function logout() {
   console.log("Logging user out...");
+  clearCookies();
   window.location.href = "http://127.0.0.1:3000/index.html";
 }
 
-function viewWingRequest() {
-  window.location.href = "http://127.0.0.1:3000/reports.html";
-}
-
 function viewReports() {
+  console.log("View reports");
   window.location.href = "http://127.0.0.1:3000/reports.html";
 }
 
 function viewChart() {
+  console.log("View charts");
   window.location.href = "http://127.0.0.1:3000/exercise_charts.html";
 }
 
@@ -110,16 +115,5 @@ function canUserAccess(user) {
     return false;
   }
 }
-
-/*function getCookie(cName) {
-  const name = cName + "=";
-  const cDecoded = decodeURIComponent(document.cookie); //to be careful
-  const cArr = cDecoded.split("; ");
-  let res;
-  cArr.forEach((val) => {
-    if (val.indexOf(name) === 0) res = val.substring(name.length);
-  });
-  return res;
-}*/
 
 document.addEventListener("DOMContentLoaded", main);
