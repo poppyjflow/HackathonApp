@@ -164,7 +164,7 @@ async function login() {
   });
   if (hashText.Matched) {
     console.log(text);
-    //document.cookie = "user=" + text + ";";
+    document.cookie = "user=" + text + ";";
     window.location.href = "http://127.0.0.1:3000/home.html";
   } else {
     alert("Invalid Password");

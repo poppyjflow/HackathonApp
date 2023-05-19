@@ -20,6 +20,7 @@ function main() {
 
 function addDynamicImage() {
   console.log(document.cookie);
+  
   const isAdmin = true;
   // if user is admin, add Generate Report screen to see stats
   // if user is general user, add Submit Wing Request instead
