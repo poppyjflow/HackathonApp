@@ -1,74 +1,209 @@
 const mainAircraftList = [];
 const mainExerciseList = [];
-
+const perdiemTable = {};
+var lastlyChosenAircraft;
 function main() {
   buildAircraftList();
   buildExerciseList();
-  buildExerciseMenu();
   registerHandlers();
-  initBarChart();
+  populateDate();
+  buildPerdiemTable();
+}
+
+function buildPerdiemTable() {
+  fetch("http://127.0.0.1:5000/perdiem", {
+    method: "GET",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => {
+      res.json().then((text) => {
+        for (let i = 0; i < text.rows; i++) {
+          var obj = text[`${i}`];
+          if (perdiemTable[`${obj.country}`] == undefined) {
+            if (obj.location != "[Other]") {
+              perdiemTable[`${obj.country}`] = [obj.location];
+            }
+          } else {
+            if (obj.location != "[Other]") {
+              perdiemTable[`${obj.country}`].push(obj.location);
+            }
+          }
+        }
+        autofillLocation();
+      });
+    })
+    .catch((error) => {
+      alert(error.message);
+    });
+}
+
+function populateDate() {
+  var today = new Date();
+
+  document.getElementById("dateValue").value =
+    today.toLocaleDateString("en-CA");
+
+  document.getElementById("unitValue").value = "1";
 }
 
 function registerHandlers() {
-  console.log("Registering handlers");
   document.getElementById("LogoutButton").addEventListener("click", logout);
   document
     .getElementById("genReportButton")
     .addEventListener("click", generateReport);
+  document
+    .getElementById("exerciseMenu")
+    .addEventListener("change", autofillLocation);
+  document
+    .getElementById("aircraftMenu")
+    .addEventListener("change", updateLastlyChosen);
+
+  document
+    .getElementById("aircraftinput")
+    .addEventListener("change", autofillAirfields);
 }
 
-function initBarChart(){
+function autofillAirfields() {
+  if (lastlyChosenAircraft != null) {
+    console.log("Should autofill: " + JSON.stringify(lastlyChosenAircraft));
+  }
+  var aircraftCount = document.getElementById("aircraftinput").value;
+  aircraftCount = "acft" + aircraftCount;
+  var personnelNum = lastlyChosenAircraft[`${aircraftCount}`];
+  console.log(personnelNum);
+  document.getElementById("personnelinput").value = personnelNum;
+}
+
+function updateLastlyChosen() {
+  var aircraftDropdown = document.getElementById("aircraftMenu");
+  var dropdownText =
+    aircraftDropdown.options[aircraftDropdown.selectedIndex].text;
+  for (const key of mainAircraftList) {
+    var name = key.airframe;
+    if (name.toLowerCase() === dropdownText.toLowerCase()) {
+      lastlyChosenAircraft = key;
+    }
+  }
+  autofillAirfields();
+}
+
+function autofillLocation() {
+  var exerciseDropdown = document.getElementById("exerciseMenu");
+  var dropdownText =
+    exerciseDropdown.options[exerciseDropdown.selectedIndex].text;
+  for (const key of mainExerciseList) {
+    var name = key.exercise_name;
+    if (name.toLowerCase() === dropdownText.toLowerCase()) {
+      buildLocationMenu(key.location);
+    }
+  }
+}
+
+function buildAircraftMenu() {
+  var frameList = [];
+  for (let i = 0; i < mainAircraftList.length; i++) {
+    frameList.push(mainAircraftList[i].airframe);
+  }
+  var aircraftMenu = document.getElementById("aircraftMenu");
+  while (aircraftMenu.hasChildNodes()) {
+    aircraftMenu.removeChild(aircraftMenu.lastChild);
+  }
+  var index = 0;
+  for (const frame of frameList) {
+    var menuItem = document.createElement("option");
+    menuItem.innerText = frame;
+    menuItem.value = "" + index;
+    aircraftMenu.appendChild(menuItem);
+    index++;
+  }
+  for (const key of mainAircraftList) {
+    var name = key.airframe;
+    if (name.toLowerCase() === frameList[0].toLowerCase()) {
+      lastlyChosenAircraft = key;
+    }
+  }
+  autofillAirfields();
+}
+
+function buildLocationMenu(location) {
+  var locationList = [];
+  if (location.length != 0 && perdiemTable.location != undefined) {
+    locationList = perdiemTable.location;
+  } else {
+    locationList.push("YEMEN");
+    locationList.push("GUATEMALA");
+    locationList.push("PORTUGAL");
+    locationList.push("ZAMBIA");
+  }
+  // Clear previous nodes
+  var exerciseMenu = document.getElementById("locationMenu");
+  while (exerciseMenu.hasChildNodes()) {
+    exerciseMenu.removeChild(exerciseMenu.lastChild);
+  }
+  var index = 0;
+  for (const location of locationList) {
+    var menuItem = document.createElement("option");
+    menuItem.innerText = location;
+    menuItem.value = "" + index;
+    exerciseMenu.appendChild(menuItem);
+    index++;
+  }
+}
+
+function initBarChart() {
   // holder data, should calculate cost for each aircraft, and
   // append the data into our json obj below.
   const data = [
     {
       lable: "Cost per day",
-      value: 100
+      value: 100,
     },
     {
       lable: "Cost per head",
-      value: 100
+      value: 100,
     },
     {
       lable: "Manpower cost",
-      value: 100
+      value: 100,
     },
     {
       lable: "Cost per aircraft",
-      value: 100
-    }
+      value: 100,
+    },
   ];
   const options = {
-    container: document.getElementById('myChart'),
+    container: document.getElementById("myChart"),
     title: {
       text: "Cost breakdown for ",
     },
     subtitle: {
-      text: 'in U.S. dollars',
+      text: "in U.S. dollars",
     },
-    data:data,
+    data: data,
     series: [
       {
-        type: 'column',
-        xKey: 'lable',
-        yKey: 'value',
-      }
-    ]
+        type: "column",
+        xKey: "lable",
+        yKey: "value",
+      },
+    ],
   };
   let chart = agCharts.AgChart.create(options);
-
 }
 
-function updateChart(){
-  let acVal = document.getElementById("acftType")
-  let acName = acVal.options[0]
+function updateChart() {
+  let acVal = document.getElementById("acftType");
+  let acName = acVal.options[0];
 }
 
 function generateReport() {
   // TODO: Use this dummy button to test autofilling the fields based on the
   // selected menu choice now that the data is loaded into objects. Check value
   // property of exerciseMenu
-  
+
   console.log("Gen report clicked");
   console.log(mainAircraftList);
   console.log(mainExerciseList);
@@ -87,8 +222,7 @@ function buildExerciseMenu() {
 }
 
 function buildExerciseList() {
-  /* Make fetch call to actually update buildExerciseList
-  fetch("http://127.0.0.1:5000/SOME_EXERCISE_ENDPOINT", {
+  fetch("http://127.0.0.1:5000/exercises", {
     method: "GET",
     mode: "cors",
     headers: {
@@ -97,34 +231,21 @@ function buildExerciseList() {
   })
     .then((res) => {
       res.json().then((text) => {
-        console.log(text);
+        //console.log("Returned: " + JSON.stringify(text));
+        for (let i = 0; i < text.rows; i++) {
+          mainExerciseList.push(text[`${i}`]);
+        }
+        buildExerciseMenu();
       });
     })
     .catch((error) => {
       alert(error.message);
-    });*/
-
-  mainExerciseList.push({
-    id: "1",
-    exercise_name: "train",
-    start_date: "2023-12-14",
-    end_date: "2023-12-29",
-    location: "Singapore",
-    status: "open",
-  });
-  mainExerciseList.push({
-    id: "2",
-    exercise_name: "fly planes",
-    start_date: "2023-08-20",
-    end_date: "2023-09-04",
-    location: "Iran",
-    status: "closed",
-  });
+    });
 }
 
 function buildAircraftList() {
-  /* Make fetch call to actually update mainAircraftList
-  fetch("http://127.0.0.1:5000/SOME_AIRCRAFT_ENDPOINT", {
+  // Make fetch call to actually update mainAircraftList
+  fetch("http://127.0.0.1:5000/aircraft_reference", {
     method: "GET",
     mode: "cors",
     headers: {
@@ -133,41 +254,19 @@ function buildAircraftList() {
   })
     .then((res) => {
       res.json().then((text) => {
-        console.log(text);
+        for (let i = 0; i < text.rows; i++) {
+          mainAircraftList.push(text[`${i}`]);
+        }
+        buildAircraftMenu();
       });
     })
     .catch((error) => {
       alert(error.message);
-    });*/
-
-  mainAircraftList.push({
-    id: "1",
-    fiscal_year: "2023",
-    airframe: "F-22",
-    acft1: "50",
-    acft2: "25",
-    acft3: "20",
-    acft4: "N/A",
-    acft5: "1",
-    acft6: "N/A",
-  });
-  mainAircraftList.push({
-    id: "2",
-    fiscal_year: "2023",
-    airframe: "C-5",
-    acft1: "5",
-    acft2: "25",
-    acft3: "10",
-    acft4: "50",
-    acft5: "N/A",
-    acft6: "N/A",
-    "16acft16": "100",
-  });
+    });
 }
 
 function logout() {
   console.log("Logging user out...");
-  document.cookie = "";
   window.location.href = "http://127.0.0.1:3000/index.html";
 }
 

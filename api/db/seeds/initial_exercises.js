@@ -10,7 +10,7 @@ exports.seed = async function(knex) {
       exercise_name: 'Exercise PACIFIC SQUANCH',
       start_date: '2023-07-13',
       end_date: '2023-07-29',
-      location: 'Guam',
+      location: 'Marshall Islands',
       status: 'OPEN',
     },
     {

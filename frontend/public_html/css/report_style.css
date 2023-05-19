@@ -35,6 +35,10 @@ h3 {
   background-color: white;
 }
 
+#aircraftMenu {
+  width: 75px;
+}
+
 .generalButton {
   background-color: #35393c;
   color: white;

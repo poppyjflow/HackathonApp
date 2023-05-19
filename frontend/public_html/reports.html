@@ -26,26 +26,20 @@
             <input type="text" />
           </div>
           <div class="inputRow">
-            <label>Date</label>
-            <input type="date" />
+            <label for="dateValue">Date</label>
+            <input id="dateValue" type="date" />
           </div>
           <div class="inputRow">
-            <label>Exercise Name</label>
+            <label for="exerciseMenu">Exercise Name</label>
             <select id="exerciseMenu"></select>
           </div>
           <div class="inputRow">
             <label>ANG Unit</label>
-            <select>
-              <option>Unit 1</option>
-              <option>Unit 2</option>
-            </select>
+            <input id="unitValue" type="text" />
           </div>
           <div class="inputRow">
             <label>TDY Location</label>
-            <select>
-              <option>Location 1</option>
-              <option>Location 2</option>
-            </select>
+            <select id="locationMenu"></select>
           </div>
           <div class="inputRow">
             <label>FROM</label>
@@ -53,10 +47,7 @@
           </div>
           <div class="inputRow">
             <label>Aircraft Type</label>
-            <select id="acftType">
-              <option>Aircraft 1</option>
-              <option>Aircraft 2</option>
-            </select>
+            <select id="aircraftMenu"></select>
           </div>
           <div class="inputRow">
             <label>Airfare Type</label>
@@ -67,11 +58,11 @@
           </div>
           <div class="inputRow">
             <label># of Aircraft</label>
-            <input type="number" />
+            <input id="aircraftinput" type="number" />
           </div>
           <div class="inputRow">
             <label># of personnel</label>
-            <input type="number" />
+            <input id="personnelinput" type="number" />
           </div>
           <div class="inputRow">
             <label>Lodging</label>
@@ -94,6 +85,5 @@
         <p id="total cost diplayed"> This is where the cost will be</p>
       </div>
     </div>
-   
   </body>
 </html>
