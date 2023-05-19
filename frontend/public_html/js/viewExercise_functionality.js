@@ -29,48 +29,8 @@ function registerHandlers() {
   document.getElementById("LogoutButton").addEventListener("click", logout);
 }
 
-function retrieveData() {
-  // TODO: When user presses Add row, need to create blank new exercise object
-  // in mainExerciseList
-  console.log("Final list: " + JSON.stringify(mainExerciseList));
-
-  // Once final list has passed all value checks, send it back to backend to update
-  // the database
-  fetch("http://127.0.0.1:5000/exercises", {
-    method: "POST",
-    mode: "cors",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ table: mainExerciseList }),
-  })
-    .then((res) => {
-      res.json().then((text) => {
-        console.log(text);
-      });
-    })
-    .catch((error) => {
-      alert(error.message);
-    });
-
-  /*var nodes = [];
-  gridOptions.api.forEachNode((rowNode, index) => {
-    console.log("node " + JSON.stringify(rowNode.data) + " is in the grid");
-    nodes.push(JSON.stringify(rowNode.data));
-    // convert this array to json and send it to db.
-  });*/
-  // I tried to get a popup to save the table and enter a name for it, but i was having
-  // trouble. I will come back to this - Henry
-  // Code that sucks below
-  //let name = prompt("Enter a name for this table", "Enter Name");
-  //var dropDown = document.getElementById("tableDropdown")
-  //var newTable = document.createElement(name);
-  //newTable.text = name;
-  //dropDown.add(newTable);
-}
-
 function initializeGrid() {
-  console.log("Initializing grid w: " + JSON.stringify(mainExerciseList));
+  //console.log("Initializing grid w: " + JSON.stringify(mainExerciseList));
   const gridDiv = document.querySelector("#myGrid");
   new agGrid.Grid(gridDiv, gridOptions);
 }
@@ -95,24 +55,46 @@ function buildList() {
     .catch((error) => {
       alert(error.message);
     });
-  let tempList = [];
-  tempList.push({
-    id: "1",
-    exercise_name: "train",
-    start_date: "2023-12-14",
-    end_date: "2023-12-29",
-    location: "Singapore",
-    status: "open",
-  });
-  tempList.push({
-    id: "2",
-    exercise_name: "fly planes",
-    start_date: "2023-08-20",
-    end_date: "2023-09-04",
-    location: "Iran",
-    status: "closed",
-  });
-  console.log("Temp List: " + JSON.stringify(tempList));
+}
+
+function retrieveData() {
+  var pushableExercises = { table: {} };
+  for (let i = 0; i < mainExerciseList.length; i++) {
+    pushableExercises.table[`${i}`] = mainExerciseList[i];
+  }
+  console.log("Final list: " + JSON.stringify(pushableExercises));
+
+  fetch("http://127.0.0.1:5000/exercises", {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(pushableExercises),
+  })
+    .then((res) => {
+      res.json().then((text) => {
+        console.log(text);
+      });
+    })
+    .catch((error) => {
+      alert(error.message);
+    });
+// Allow wing 
+  /*var nodes = [];
+  gridOptions.api.forEachNode((rowNode, index) => {
+    console.log("node " + JSON.stringify(rowNode.data) + " is in the grid");
+    nodes.push(JSON.stringify(rowNode.data));
+    // convert this array to json and send it to db.
+  });*/
+  // I tried to get a popup to save the table and enter a name for it, but i was having
+  // trouble. I will come back to this - Henry
+  // Code that sucks below
+  //let name = prompt("Enter a name for this table", "Enter Name");
+  //var dropDown = document.getElementById("tableDropdown")
+  //var newTable = document.createElement(name);
+  //newTable.text = name;
+  //dropDown.add(newTable);
 }
 
 function logout() {
@@ -128,7 +110,6 @@ function wipeoutGrid() {
 
 function rowAdd() {
   console.log("Row being added");
-  var id = mainExerciseList.length + 1;
   mainExerciseList.push({
     exercise_name: "",
     start_date: "",

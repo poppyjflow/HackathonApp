@@ -2,22 +2,22 @@ const mainAircraftList = [];
 
 const columnDefs = [
   { field: "airframe", editable: true },
-  { field: "acft", editable: true },
-  { field: "acft", editable: true },
-  { field: "acft", editable: true },
-  { field: "acft", editable: true },
-  { field: "acft", editable: true },
-  { field: "acft", editable: true },
-  { field: "acft", editable: true },
-  { field: "acft", editable: true },
-  { field: "acft", editable: true },
-  { field: "acft", editable: true },
-  { field: "acft", editable: true },
-  { field: "acft", editable: true },
-  { field: "acft", editable: true },
-  { field: "acft", editable: true },
-  { field: "acft", editable: true },
-  { field: "acft", editable: true },
+  { field: "acft1", editable: true },
+  { field: "acft2", editable: true },
+  { field: "acft3", editable: true },
+  { field: "acft4", editable: true },
+  { field: "acft5", editable: true },
+  { field: "acft6", editable: true },
+  { field: "acft7", editable: true },
+  { field: "acft8", editable: true },
+  { field: "acft9", editable: true },
+  { field: "acft10", editable: true },
+  { field: "acft11", editable: true },
+  { field: "acft12", editable: true },
+  { field: "acft13", editable: true },
+  { field: "acft14", editable: true },
+  { field: "acft15", editable: true },
+  { field: "acft16", editable: true },
 ];
 
 // specify the data
@@ -34,7 +34,7 @@ function main() {
 }
 
 function initializeGrid() {
-  console.log("Initializing grid w: " + JSON.stringify(mainExerciseList));
+  console.log("Initializing grid w: " + JSON.stringify(mainAircraftList));
   const gridDiv = document.querySelector("#myGrid");
   new agGrid.Grid(gridDiv, gridOptions);
 }
@@ -54,7 +54,7 @@ async function buildList() {
     alert(error.message);
   });
   for (let i = 0; i < text.rows; i++) {
-    mainExerciseList.push(text[`${i}`]);
+    mainAircraftList.push(text[`${i}`]);
   }
   initializeGrid();
   console.log(text);
@@ -91,8 +91,6 @@ function registerHandlers() {
 }
 
 function retrieveData() {
-  // TODO: When user presses Add row, need to create blank new exercise object
-  // in mainAircraftList
   console.log("Final list: " + JSON.stringify(mainAircraftList));
 
   // Once final list has passed all value checks, send it back to backend to update
@@ -128,9 +126,34 @@ function logout() {
   window.location.href = "http://127.0.0.1:3000/index.html";
 }
 
+function wipeoutGrid() {
+  gridOptions.api.setRowData([]);
+  gridOptions.api.setRowData(mainAircraftList);
+}
+
 function rowAdd() {
-  console.log("something is happening");
-  gridOptions.api.applyTransaction({ add: [{}] });
+  console.log("Row being added");
+  mainAircraftList.push({
+    acft1: null,
+    acft2: null,
+    acft3: null,
+    acft4: null,
+    acft5: null,
+    acft6: null,
+    acft7: null,
+    acft8: null,
+    acft9: null,
+    acft10: null,
+    acft11: null,
+    acft12: null,
+    acft13: null,
+    acft14: null,
+    acft15: null,
+    acft16: null,
+    airframe: null,
+    year: null,
+  });
+  wipeoutGrid();
 }
 
 /*function testJson() {

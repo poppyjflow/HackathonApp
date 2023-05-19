@@ -1,3 +1,27 @@
+function main() {
+  addDynamicImage();
+  registerHandlers();
+}
+
+/*
+ <h1>Generate Report</h1>
+      <div class="imgContainer" id="reportContainer">
+        <img
+          class="clickableImg"
+          id="reportImg"
+          src="./images/generate_report.jpg"
+        />
+        <div class="imgOverlay" id="reportOverlay"></div>
+        <div class="imgHeader" id="reportHeader">
+          Create/View/Modify Reports
+        </div>
+      </div>
+*/
+function addDynamicImage() {
+  console.log(document.cookie);
+  //if user is general, add function to image that redirects to one screen
+}
+
 function registerHandlers() {
   document.getElementById("LogoutButton").addEventListener("click", logout);
   document
@@ -6,10 +30,6 @@ function registerHandlers() {
   document
     .getElementById("aircraftContainer")
     .addEventListener("click", viewACT);
-  document
-    .getElementById("reportContainer")
-    .addEventListener("click", viewReports);
-  document.getElementById("chartButton").addEventListener("click", viewChart);
 }
 
 function logout() {
@@ -60,4 +80,4 @@ function getCookie(cName) {
   return res;
 }
 
-document.addEventListener("DOMContentLoaded", registerHandlers);
+document.addEventListener("DOMContentLoaded", main);
