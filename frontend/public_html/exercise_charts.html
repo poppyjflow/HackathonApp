@@ -1,55 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./css/chart_style.css" />
-    <link rel="icon" href="/images/home_logo.png" />
-    <script src="./js/charts_functionality.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-    <title>All Reports</title>
-  </head>
-  <body>
-    <div id="header">
-      <a href="http://127.0.0.1:3000/home.html">
-        <img id="logoImg" src="./images/home_logo.png" />
-      </a>
-      <button class="headerButton" id="LogoutButton">Log Out</button>
-    </div>
-    <div id="content">
-      <div id="formContainer">
-        <h1>Create Chart</h1>
-        <form id="chartForm">
-          <div class="inputRow">
-            <label>Exercise Name</label>
-            <select id="exerciseMenu">
-              <option value="ex1">PACIFIC SQUANCH</option>
-              <option value="ex2">CROMULON SCHWIFTY</option>
-            </select>
-          </div>
-          <div class="inputRow" id="buttonContainer">
-            <button class="generalButton" id="generateButton">
-              Generate Chart
-            </button>
-          </div>
-        </form>
-        <div>
-          <canvas id="cpdChart"></canvas>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./css/chart_style.css" />
+  <link rel="icon" href="/images/home_logo.png" />
+  <script src="./js/charts_functionality.jsx"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.umd.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.0/chart.min.js"></script> -->
+
+
+
+  <title>All Reports</title>
+</head>
+
+<body>
+  <div id="header">
+    <a href="http://127.0.0.1:3000/home.html">
+      <img id="logoImg" src="./images/home_logo.png" />
+    </a>
+    <button class="headerButton" id="LogoutButton">Log Out</button>
+  </div>
+  <div id="content">
+    <div id="formContainer">
+      <h1>Create Chart</h1>
+      <form id="chartForm">
+        <div class="inputRow">
+          <label>Exercise Name</label>
+          <select id="exerciseMenu">
+            <option value="ex1">PACIFIC SQUANCH</option>
+            <option value="ex2">CROMULON SCHWIFTY</option>
+          </select>
         </div>
-        <div>
-          <canvas id="cphChart"></canvas>
+        <div class="inputRow" id="buttonContainer">
+          <button class="generalButton" id="generateButton">
+            Generate Chart
+          </button>
         </div>
-        <div>
-          <canvas id="manChart"></canvas>
+      </form>
+      <div class="chartCardTitle">
+        <h2>
+          DAILY PERSONNEL COSTS PER WING<br>
+          <table>
+            <tr>
+              <td class="bTop" colspan="3">Total Manpower Cost:
+              </td>
+              <td class="bTop" colspan="3">$167,056
+              </td>
+            </tr>
+          </table>
+        </h2>
+      </div>
+      <div class="chartCard">
+        <div class="chartBox">
+          <canvas id="cpdChart" height="400px" width="400px" float="left"></canvas>
         </div>
-        <div>
-          <canvas id="cpaChart"></canvas>
-        </div>
-        <div>
-          <canvas id="totalChart"></canvas>
+        <div class="chartBox">
+          <h3>
+          <table height="380px" width="400px" cellpadding="5px">
+            <col style="width:50%">
+            <col style="width:50%">
+            <tr>
+              <td class="bTop" align="right">161 ARW:
+              </td>
+              <td class="bTop" align="left">$43,554
+              </td>
+            </tr>
+            <tr>
+              <td class="bTop" align="right">134 FS:
+              </td>
+              <td class="bTop" align="left">$54,872
+              </td>
+            </tr>
+            <tr></tr>
+            <td class="bTop" align="right">163 ATKW:
+            </td>
+            <td class="bTop" align="left">$43,293
+            </td>
+            </tr>
+          </table></h3>
         </div>
       </div>
+      <div>
+        <canvas id="cphChart" height="400px" width="400px"></canvas>
+      </div>
+      <div>
+        <canvas id="manChart" height="400px" width="400px"></canvas>
+      </div>
+      <div>
+        <canvas id="cpaChart" height="400px" width="400px"></canvas>
+      </div>
+      <div>
+        <canvas id="totalChart" height="400px" width="400px"></canvas>
+      </div>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
