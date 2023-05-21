@@ -1,6 +1,10 @@
+## Architecture Overview
+
+// This is a web-based app: database = PostgreSQL, server = Python, client = Javascript.
+
 ## Database Help
 
-These are thhe commands to configure a local version of the database, including seeding the tables using Knex.
+These are the commands to configure a local version of the database, including seeding the tables using Knex.
 
 // Install PostgreSQL & Knex.
 npm i pg knex
@@ -33,3 +37,15 @@ COPY per_diem_chart(country,location,season_code,season_start_date,season_end_da
 FROM '/var/lib/postgresql/data/per_diem_chart.csv'
 DELIMITER ','
 CSV HEADER;
+
+## Server Help
+
+// The API is written in Python3, so the command to run it is:
+python3 api_main.py
+
+// Keep in mind that a handful of prerequisite libraries are required; when you run the above commands, the error messages will tell you which libs need to be installed using your standard OS installer (pip works well).
+
+## Client Help
+
+// Standard Javascript client spin-up:
+node server.js
