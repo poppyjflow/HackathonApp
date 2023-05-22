@@ -104,7 +104,7 @@ class AircraftRef(Resource):
             #airframe
             rd['airframe'] = row[2]
             #year
-            rd['year'] = row[1]
+            rd['fiscal_year'] = row[1]
             #cost for each number of aircraft
             for num_workers in range(3,len(row)):
                 rd['acft'+str(num_workers-2)] = row[num_workers]
@@ -143,6 +143,7 @@ class AircraftRef(Resource):
         
         #convert table from json string to dict
         table = table.replace('\'','\"')
+        print(table)
         table = json.loads(table)
 
         #iterate through table rows and insert them
@@ -153,7 +154,11 @@ class AircraftRef(Resource):
             #values for sql query
             arg_vals = []
             for key in table_columns:
+                if table[row][key] == "":
+                    table[row][key] = "null"
                 arg_vals.append(table[row][key])
+                #if arg_vals[table][row][key] == "":
+                #    arg_vals[table][row][key] = "N/A"
 
             arg_vals = str(arg_vals).replace('[','(').replace(']',')')
             #fix booleans for postgres

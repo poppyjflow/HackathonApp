@@ -99,7 +99,7 @@ function retrieveData() {
   })
     .then((res) => {
       res.json().then((text) => {
-        console.log(text);
+        console.log("Response: " + text);
       });
     })
     .catch((error) => {
@@ -127,10 +127,10 @@ function wipeoutGrid() {
 function rowAdd() {
   console.log("Row being added");
   mainExerciseList.push({
-    exercise_name: "",
-    start_date: "",
     end_date: "",
+    exercise_name: "",
     location: "",
+    start_date: "",
     status: "",
   });
   wipeoutGrid();

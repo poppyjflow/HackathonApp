@@ -107,10 +107,6 @@ h1 {
   background: url("../images/home_logo.png");
 }
 
-canvas {
-  margin: 0 auto;
-}
-
 #cpdChart {
   width: 400px;
   height: 400px;
