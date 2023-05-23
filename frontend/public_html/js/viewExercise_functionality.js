@@ -3,9 +3,7 @@ const mainExerciseList = [];
 // specify the data
 
 var userObj = JSON.parse(document.cookie.split("=")[1]);
-console.log(userObj);
 const isAdmin = userObj.access_level == "PACAF";
-console.log(isAdmin);
 const columnDefs = [
   { field: "exercise_name", editable: isAdmin },
   { field: "location", editable: isAdmin },
@@ -28,15 +26,9 @@ function main() {
   //gridOptions.api.setRowData(mainExerciseList);
 }
 
-/*
-* <div>
-        <button id="addRow" class="generalButton">Add Exercise</button>
-        <button id="saveButton" class="generalButton">Save Changes</button>
-      </div>
-*/
 function addButtons() {
   var userObj = JSON.parse(document.cookie.split("=")[1]);
-  console.log(userObj);
+  console.log("User: " + JSON.stringify(userObj));
   if (userObj.access_level == "PACAF") {
     var buttonContainer = document.createElement("div");
     var addRowButton = document.createElement("button");
@@ -107,27 +99,12 @@ function retrieveData() {
   })
     .then((res) => {
       res.json().then((text) => {
-        console.log(text);
+        console.log("Response: " + text);
       });
     })
     .catch((error) => {
       alert(error.message);
     });
-  // Allow wing
-  /*var nodes = [];
-  gridOptions.api.forEachNode((rowNode, index) => {
-    console.log("node " + JSON.stringify(rowNode.data) + " is in the grid");
-    nodes.push(JSON.stringify(rowNode.data));
-    // convert this array to json and send it to db.
-  });*/
-  // I tried to get a popup to save the table and enter a name for it, but i was having
-  // trouble. I will come back to this - Henry
-  // Code that sucks below
-  //let name = prompt("Enter a name for this table", "Enter Name");
-  //var dropDown = document.getElementById("tableDropdown")
-  //var newTable = document.createElement(name);
-  //newTable.text = name;
-  //dropDown.add(newTable);
 }
 
 async function clearCookies() {
@@ -150,37 +127,14 @@ function wipeoutGrid() {
 function rowAdd() {
   console.log("Row being added");
   mainExerciseList.push({
-    exercise_name: "",
-    start_date: "",
     end_date: "",
+    exercise_name: "",
     location: "",
+    start_date: "",
     status: "",
   });
   wipeoutGrid();
   //gridOptions.api.applyTransaction({ add: [{}] });
 }
-
-/*function testJson() {
-  This function uses made up data and populates the table
-  let myjsonobj = [
-    {
-      id: "2",
-      exercise_name: "train",
-      start_date: "2023-12-14",
-      end_date: "2023-12-29",
-      location: "Singapore",
-      status: "tbd",
-    },
-    {
-      id: "2",
-      exercise_name: "fly planes",
-      start_date: "2023-08-20",
-      end_date: "2023-09-04",
-      location: "Iran",
-      status: "tbd",
-    },
-  ];
-  gridOptions.api.setRowData(mainExerciseList);
-}*/
 
 document.addEventListener("DOMContentLoaded", main);

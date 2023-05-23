@@ -1,6 +1,5 @@
 const mainAircraftList = [];
 var userObj = JSON.parse(document.cookie.split("=")[1]);
-console.log(userObj);
 const isAdmin = userObj.access_level == "PACAF";
 
 const columnDefs = [
@@ -38,7 +37,6 @@ function main() {
 
 function addButtons() {
   var userObj = JSON.parse(document.cookie.split("=")[1]);
-  console.log(userObj);
   if (userObj.access_level == "PACAF") {
     var buttonContainer = document.createElement("div");
     var addRowButton = document.createElement("button");
@@ -60,7 +58,6 @@ function addButtons() {
   }
 }
 function initializeGrid() {
-  console.log("Initializing grid w: " + JSON.stringify(mainAircraftList));
   const gridDiv = document.querySelector("#myGrid");
   new agGrid.Grid(gridDiv, gridOptions);
 }
@@ -80,34 +77,22 @@ async function buildList() {
     alert(error.message);
   });
   for (let i = 0; i < text.rows; i++) {
+    var current = text[`${i}`];
+    for (let i = 1; i < 17; i++) {
+      if (current[`acft${i}`] == "null") {
+        current[`acft${i}`] = "";
+      }
+    }
+    if (current.airframe == "null") {
+      current.airframe = "";
+    }
+    if (current.fiscal_year == "null") {
+      current.fiscal_year = "";
+    }
     mainAircraftList.push(text[`${i}`]);
   }
+  console.log("received: " + JSON.stringify(text));
   initializeGrid();
-  console.log(text);
-
-  /*mainAircraftList.push({
-    id: "1",
-    fiscal_year: "2023",
-    airframe: "F-22",
-    "1acft": "50",
-    "2acft": "25",
-    "3acft": "20",
-    "4acft": "N/A",
-    "5acft": "1",
-    "6acft": "N/A",
-  });
-  mainAircraftList.push({
-    id: "2",
-    fiscal_year: "2023",
-    airframe: "C-5",
-    "1acft": "5",
-    "2acft": "25",
-    "3acft": "10",
-    "4acft": "50",
-    "5acft": "N/A",
-    "6acft": "N/A",
-    "16acft": "100",
-  });*/
 }
 
 function registerHandlers() {
@@ -115,17 +100,23 @@ function registerHandlers() {
 }
 
 function retrieveData() {
-  console.log("Final list: " + JSON.stringify(mainAircraftList));
+  var index = 0;
+  var finalList = {};
+  for (const obj of mainAircraftList) {
+    finalList[`${index}`] = obj;
+    index++;
+  }
 
   // Once final list has passed all value checks, send it back to backend to update
   // the database
+  console.log("ABOUT TO SEND: " + JSON.stringify({ table: finalList }));
   fetch("http://127.0.0.1:5000/aircraft_reference", {
     method: "POST",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ table: mainAircraftList }),
+    body: JSON.stringify({ table: finalList }),
   })
     .then((res) => {
       res.json().then((text) => {
@@ -135,13 +126,6 @@ function retrieveData() {
     .catch((error) => {
       alert(error.message);
     });
-
-  /*var nodes = [];
-  gridOptions.api.forEachNode((rowNode, index) => {
-    console.log("node " + JSON.stringify(rowNode.data) + " is in the grid");
-    nodes.push(JSON.stringify(rowNode.data));
-    // do something with this data. Need to send it back to db.
-  });*/
 }
 
 async function clearCookies() {
@@ -162,59 +146,27 @@ function wipeoutGrid() {
 }
 
 function rowAdd() {
-  console.log("Row being added");
   mainAircraftList.push({
-    acft1: null,
-    acft2: null,
-    acft3: null,
-    acft4: null,
-    acft5: null,
-    acft6: null,
-    acft7: null,
-    acft8: null,
-    acft9: null,
-    acft10: null,
-    acft11: null,
-    acft12: null,
-    acft13: null,
-    acft14: null,
-    acft15: null,
-    acft16: null,
-    airframe: null,
-    year: null,
+    acft1: "",
+    acft2: "",
+    acft3: "",
+    acft4: "",
+    acft5: "",
+    acft6: "",
+    acft7: "",
+    acft8: "",
+    acft9: "",
+    acft10: "",
+    acft11: "",
+    acft12: "",
+    acft13: "",
+    acft14: "",
+    acft15: "",
+    acft16: "",
+    airframe: "",
+    fiscal_year: "",
   });
   wipeoutGrid();
 }
-
-/*function testJson() {
-  //This function uses made up data and populates the table
-  let myjsonobj = [
-    {
-      id: "2",
-      fiscal_year: "2023",
-      airframe: "F-22",
-      "1acft": "50",
-      "2acft": "25",
-      "3acft": "20",
-      "4acft": "N/A",
-      "5acft": "1",
-      "6acft": "N/A",
-    },
-    {
-      id: "2",
-      fiscal_year: "2023",
-      airframe: "C-5",
-      "1acft": "5",
-      "2acft": "25",
-      "3acft": "10",
-      "4acft": "50",
-      "5acft": "N/A",
-      "6acft": "N/A",
-      "16acft": "100",
-    },
-  ];
-  console.log(myjsonobj);
-  gridOptions.api.setRowData(myjsonobj);
-}*/
 
 document.addEventListener("DOMContentLoaded", main);
