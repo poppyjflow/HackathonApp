@@ -1,4 +1,4 @@
-## Architecture Overview jmf
+## Architecture Overview
 
 // This is a web-based app: database = PostgreSQL, server = Python, client = Javascript.
 
