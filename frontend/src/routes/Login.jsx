@@ -11,7 +11,6 @@ const Login = () => {
   const [user, setUser] = useOutletContext();
 
   const test = useActionData();
-  console.log('action data: ', test);
 
   useEffect(() => {
     if (test) {

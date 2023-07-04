@@ -135,7 +135,7 @@ const Navbar = ({ navProps }) => {
             <Box sx={{ flexGrow: .2, display: 'flex', fontSize: 30, justifyContent: 'right' }}>
               <img src={require('../images/Delta_Foxlogo_square.png')} alt='Nope!' crossOrigin="anonymous" width='50px' height='50px' />
             </Box>
-            <h3>FINPLAN Tool</h3>
+            <h3>ANG Exercise Planning Tool</h3>
           </Box>
 
           {/* <Box sx={{ flexGrow: 4, display: 'flex', justifyContent: 'center' }}>
@@ -168,7 +168,7 @@ const Navbar = ({ navProps }) => {
 </Box>
  */}
           <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'right' }}>
-            {userData.rank} {userData.f_name} {userData.l_name}, {userData.org}
+            {userData.rank} {userData.fname} {userData.lname}, {userData.unit_name}
           </Box>
           <Box sx={{ flexGrow: .5, display: 'flex', justifyContent: 'right' }}>
             <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">

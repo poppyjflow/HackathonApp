@@ -98,22 +98,15 @@ const DataTable = ({ columns, user, itemBar, updated, setUpdated }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(`http://localhost:8080/requests/${userProfile.org_id}`);
+      const res = await axios.get(`http://localhost:5000/exercises`);
 
-      // Calculate annual requests/allocations/obligations per-row based on the quarterly data.  Fornow this actually overrides the DB values for these three columns, which should remain = 0.
       const fyData = [];
-      var ctr = 1;
       for (const j in res.data) {
-        // Though we queried for all Requests for an org, we really only want to display Requests for the FY specified in the dropdown.
-        if (res.data[j].fy.toString() === fy.value.toString()) {
-          res.data[j].requested = res.data[j].q1requested + res.data[j].q2requested + res.data[j].q3requested + res.data[j].q4requested;
-          res.data[j].allocated = res.data[j].q1allocated + res.data[j].q2allocated + res.data[j].q3allocated + res.data[j].q4allocated;
-          res.data[j].obligated = res.data[j].q1obligated + res.data[j].q2obligated + res.data[j].q3obligated + res.data[j].q4obligated;
+        // Though we queried for all Requests for an org, we really only want to display Requests for the FY specified in the dropdown.  Comment this out for now, but we'll need it later when we implement FY/other filtering.
+        // if (res.data[j].fy.toString() === fy.value.toString()) {
 
-//          res.data[j].requested = "$ " + res.data[j].requested;
-
-          fyData.push(res.data[j]);
-        }
+        fyData.push(res.data[j]);
+        // }
       }
 
       setTableData(fyData);
@@ -239,18 +232,19 @@ const DataTable = ({ columns, user, itemBar, updated, setUpdated }) => {
           sorting: {
             sortModel: [{ field: 'fiscal_quarter', sort: 'asc' }]
           },
-          columns: {
-            columnVisibil0ityModel: {
-              id: false,
-              l_name: false,
-              f_name: false,
-              req_date: false,
-              requestee: false,
-            },
-          }
+          // columns: {
+          //   columnVisibil0ityModel: {
+          //     id: false,
+          //     l_name: false,
+          //     f_name: false,
+          //     req_date: false,
+          //     requestee: false,
+          //   },
+          // }
         }}
         disableColumnMenu
         rows={tableData}
+        getRowId={row => row.id}
         columns={[...columns, ...userActions]}
         editMode='row'
         rowModesModel={rowModesModel}
